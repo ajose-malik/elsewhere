@@ -1,0 +1,30 @@
+{
+	"name": "locus",
+	"version": "1.0.0",
+	"engines": {
+		"node": "15.0.1"
+	},
+	"description": "",
+	"main": "server.js",
+	"scripts": {
+		"test": "echo \"Error: no test specified\" && exit 1"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/ajose-malik/locus.git"
+	},
+	"keywords": [],
+	"author": "",
+	"license": "ISC",
+	"bugs": {
+		"url": "https://github.com/ajose-malik/locus/issues"
+	},
+	"homepage": "https://github.com/ajose-malik/locus#readme",
+	"dependencies": {
+		"dotenv": "^8.2.0",
+		"ejs": "^3.1.5",
+		"express": "^4.17.1",
+		"method-override": "^3.0.0",
+		"mongoose": "^5.11.8"
+	}
+}
