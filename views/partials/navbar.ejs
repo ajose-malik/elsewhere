@@ -4,7 +4,7 @@
 	<% if (currentUser) { %>
 	<li>Welcome <%= currentUser.username %></li>
 	<li>
-		<form action="/sessions?_method=DELETE" method="POST">
+		<form action="/sessions?_method=DELETE" method="POST" novalidate>
 			<input type="submit" value="Log Out" class="btn-small red" />
 		</form>
 	</li>

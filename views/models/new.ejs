@@ -1,0 +1,21 @@
+<% layout('layouts/template')%>
+
+<nav><%- include ('../partials/nav.ejs') %></nav>
+<div class="container">
+	<h1>Fruits New Page</h1>
+	<form action="/fruits" method="POST" novalidate>
+		<label for="name">Name:</label>
+		<input type="text" name="name" required />
+		<label for="color">Color:</label>
+		<input type="text" name="color" />
+		<br />
+		<div>
+			<label for="readyToEat">
+				<input type="checkbox" id="readyToEat" name="readyToEat" />
+				<span>Is Ready to Eat</span>
+			</label>
+		</div>
+		<br />
+		<input type="submit" value="Submit" />
+	</form>
+</div>
