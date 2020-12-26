@@ -4,6 +4,8 @@ const catchAsync = require('./utilities/catchAsync');
 const validate = require('../utilities/validate');
 const model = express.Router();
 
+// {mergeParams: true}??? for express.Router???
+
 // MIDDLEWARE
 const isAuthenticated = (req, res, next) => {
 	if (req.session.currentUser) {
