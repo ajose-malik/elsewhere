@@ -11,9 +11,9 @@ require('dotenv').config();
 const PORT = process.env.PORT || 3003;
 const MONGODB_URI = process.env.MONGODB_URI;
 
-const modelController = require('./controllers/model');
-const userController = require('./controllers/user');
-const sessionController = require('./controllers/session');
+const modelController = require('./routes/model');
+const userController = require('./routes/user');
+const sessionController = require('./routes/session');
 
 app.engine('ejs', ejsMate);
 app.set('view engine', 'ejs');
