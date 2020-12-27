@@ -39,6 +39,8 @@ app.use(
 		resave: false,
 		saveUninitialized: false,
 		cookie: {
+			name: 'harlequin shrimp',
+			// secure: true,
 			httpOnly: true,
 			expires: Date.now() + 1000 * 60 * 60 * 24 * 7,
 			maxAge: 1000 * 60 * 60 * 24 * 7
