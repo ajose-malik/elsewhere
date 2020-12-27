@@ -11,28 +11,19 @@ require('dotenv').config();
 const PORT = process.env.PORT || 3003;
 const MONGODB_URI = process.env.MONGODB_URI;
 
-const modelController = require('./routes/model');
+const modelController = require('./routes/elsewhere');
 const userController = require('./routes/user');
-const sessionController = require('./routes/session');
 
 app.engine('ejs', ejsMate);
 app.set('view engine', 'ejs');
 
-app.use('/model', modelController);
+app.use('/elsewhere', modelController);
 app.use('/user', userController);
-app.use('/session', sessionController);
 app.use(express.static('public'));
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(methodOverride('_method'));
-app.use((req, res, next) => {
-	res.locals.messages = req.flash(message);
-	next();
-});
-app.use((err, req, res, next) => {
-	const { status = 500, message = 'Something went wrong' } = err;
-	res.status(status).render('error', { err });
-});
+
 app.use(
 	session({
 		secret: process.env.SECRET,

@@ -7,7 +7,7 @@
 	"description": "",
 	"main": "server.js",
 	"scripts": {
-		"sass": "node-sass -w public/scss/ -o public/dist/css/ --recursive",
+		"sass": "node-sass -w public/stylesheet/scss/ -o public/stylesheet/dist/css/ --recursive",
 		"start": "node server.js"
 	},
 	"repository": {
@@ -29,7 +29,6 @@
 		"ejs-mate": "^3.0.0",
 		"express": "^4.17.1",
 		"express-session": "^1.17.1",
-		"joi": "^17.3.0",
 		"method-override": "^3.0.0",
 		"mongoose": "^5.11.8",
 		"multer": "^1.4.2",
