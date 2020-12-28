@@ -8,17 +8,29 @@ const flash = require('connect-flash');
 const app = express();
 
 require('dotenv').config();
-const PORT = process.env.PORT || 3003;
-const MONGODB_URI = process.env.MONGODB_URI;
+const { PORT } = process.env || 3003;
+const { MONGODB_URI } = process.env;
 
-const modelController = require('./routes/elsewhere');
-const userController = require('./routes/user');
+mongoose
+	.connect(MONGODB_URI, {
+		useNewUrlParser: true,
+		useCreateIndex: true,
+		useUnifiedTopology: true,
+		useFindAndModify: false
+	})
+	.then(() => console.log('STARTED MONGODB'))
+	.catch(e => console.log('DISASTER\n', e));
+
+// const elsewhereRoute = require('./routes/elsewhere');
+// const userRoute = require('./routes/user');
+const seederRoute = require('./routes/seeder');
 
 app.engine('ejs', ejsMate);
 app.set('view engine', 'ejs');
 
-app.use('/elsewhere', modelController);
-app.use('/user', userController);
+// app.use('/elsewhere', elsewhereRoute);
+// app.use('/user', userRoute);
+app.use('/seeder', seederRoute);
 app.use(express.static('public'));
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
@@ -39,14 +51,8 @@ app.use(
 	})
 );
 
-mongoose
-	.connect(MONGODB_URI, {
-		useNewUrlParser: true,
-		useCreateIndex: true,
-		useUnifiedTopology: true,
-		useFindAndModify: false
-	})
-	.then(() => console.log('STARTED MONGODB'))
-	.catch(e => console.log('DISASTER\n', e));
+app.get('/', (req, res) => {
+	res.render('home');
+});
 
 app.listen(PORT, () => console.log('STARTED PORT:', PORT));

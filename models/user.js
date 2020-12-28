@@ -16,9 +16,9 @@ const userSchema = Schema({
 	password: {
 		type: String,
 		required: true
-	},
-	chatbox: [chatSchema],
-	pixels: [{ type: Schema.Types.ObjectId, ref: 'Pixel' }]
+	}
+	// chatbox: [chatSchema],
+	// pixels: [{ type: Schema.Types.ObjectId, ref: 'Pixel' }]
 });
 
 module.exports = mongoose.model('User', userSchema);
