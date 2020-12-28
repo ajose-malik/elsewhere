@@ -10,12 +10,14 @@ const userSchema = Schema({
 	// profilePhoto: [imageSchema],
 	username: {
 		type: String,
-		required: true
+		required: true,
+		unique: true
 	},
 	password: {
 		type: String,
 		required: true
 	},
+	chatbox: [chatSchema],
 	pixels: [{ type: Schema.Types.ObjectId, ref: 'Pixel' }]
 });
 
