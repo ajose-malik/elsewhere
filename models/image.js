@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 const { Schema } = mongoose;
 
-const imageSchema = Schema({
+const imageSchema = new Schema({
 	url: String,
 	filename: String
 });

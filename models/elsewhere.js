@@ -1,14 +1,15 @@
 const mongoose = require('mongoose');
 const { Schema } = mongoose;
-const Review = require('./review');
+// const Rating = require('./rating');
 
-const elsewhereSchema = Schema({
-	location: String,
-	title: String,
-	description: String,
-	cost: Number,
+const elsewhereSchema = new Schema({
+	title: { type: String, required: true },
+	description: { type: String, required: true },
+	cost: { type: Number, required: true },
+	rating: [{ type: Schema.Types.ObjectId, ref: 'Rating' }],
 	author: [{ type: Schema.Types.ObjectId, ref: 'User' }],
-	reviews: [{ type: Schema.Types.ObjectId, ref: 'Review' }]
+	location: { type: String, required: true },
+	image: []
 });
 
 module.exports = mongoose.model('Elsewhere', elsewhereSchema);
