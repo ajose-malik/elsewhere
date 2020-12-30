@@ -7,9 +7,10 @@ elseRouter.get('/new', (req, res) => {
 });
 
 elseRouter.post('/', async (req, res) => {
-	const elsewhere = new Elsewhere(req.body.elsewhere);
-	await elsewhere.save();
-	console.log(req.body.elsewhere);
+	const { elsewhere } = req.body;
+	const newElsewhere = new Elsewhere(elsewhere);
+	await newElsewhere.save();
+	console.log(elsewhere);
 	res.send('created!!!');
 });
 

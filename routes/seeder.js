@@ -15,44 +15,47 @@ seedRouter.get(`/${SEEDER}`, async (req, res) => {
 	await Elsewhere.deleteMany({});
 	await Rating.deleteMany({});
 	await Image.deleteMany({});
-	// for (let i = 0; i < 5; i++) {
-	const name = faker.name.findName();
-	const randNum = Math.floor(Math.random() * (name.length - 3) + 3);
-	const randGen = Math.floor(Math.random() * cities.length);
-	const username = name.substring(0, randNum).split(' ').join('_');
-	const password = faker.internet.password();
 
-	const user = new User({
-		name,
-		username,
-		password
-	});
-	await user.save();
+	for (let i = 0; i < 5; i++) {
+		const randNum = Math.floor(Math.random() * (6, 10) + 6);
+		const randGen = Math.floor(Math.random() * cities.length);
+		const username = faker.name
+			.findName()
+			.substring(0, randNum)
+			.split(' ')
+			.join('_');
+		const password = faker.internet.password();
 
-	const rating = new Rating({
-		rating: Math.floor(Math.random() * 5) + 1,
-		author: user
-	});
-	await rating.save();
+		const user = new User({
+			username,
+			password
+		});
+		await user.save();
 
-	const image = new Image({
-		url: faker.image.image(),
-		filename: faker.lorem.word()
-	});
-	await image.save();
+		const rating = new Rating({
+			rating: Math.floor(Math.random() * 5) + 1,
+			author: user
+		});
+		await rating.save();
 
-	const elsewhere = new Elsewhere({
-		author: user,
-		location: `${cities[randGen].city}, ${cities[randGen].state}`,
-		title: faker.lorem.word(),
-		description: faker.lorem.paragraph(),
-		cost: Math.floor(Math.random() * 10) + 1,
-		rating,
-		image: [image]
-	});
+		const image = new Image({
+			url: faker.image.image(),
+			filename: faker.lorem.word()
+		});
+		await image.save();
 
-	await elsewhere.save();
-	// }
+		const elsewhere = new Elsewhere({
+			author: user,
+			location: `${cities[randGen].city}, ${cities[randGen].state}`,
+			title: faker.lorem.word(),
+			description: faker.lorem.paragraph(),
+			cost: Math.floor(Math.random() * 10) + 1,
+			rating,
+			image: [image]
+		});
+
+		await elsewhere.save();
+	}
 	res.send('seeded!!!');
 });
 

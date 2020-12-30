@@ -6,6 +6,7 @@ const mongoose = require('mongoose');
 const session = require('express-session');
 const elseRouter = require('./routes/elsewhere');
 const seedRouter = require('./routes/seeder');
+const userRouter = require('./routes/user');
 
 // Config /////////////////////////////////////////////////////////////////////////
 const app = express();
@@ -25,7 +26,7 @@ mongoose
 
 app.listen(PORT, () => console.log('STARTED PORT:', PORT));
 
-// Middleware + Engine ////////////////////////////////////////////////////////////////////////////
+// Middleware + Engine /////////////////////////////////////////////////////////////
 app.engine('ejs', ejsMate);
 app.set('view engine', 'ejs');
 app.use(express.static('public'));
@@ -50,6 +51,7 @@ app.use(
 // Routers ///////////////////////////////////////////////////////////////////////////////
 app.use('/elsewhere', elseRouter);
 app.use('/seeder', seedRouter);
+app.use('/user', userRouter);
 
 // Routes /////////////////////////////////////////////////////////////////////////////////
 app.get('/', (req, res) => {
