@@ -1,5 +1,5 @@
 const express = require('express');
-const seeder = express.Router();
+const seedRouter = express.Router();
 const faker = require('faker/locale/en_US');
 const User = require('../models/user');
 const Image = require('../models/image');
@@ -10,7 +10,7 @@ const cities = require('../seeds/cities');
 require('dotenv').config();
 const { SEEDER } = process.env;
 
-seeder.get(`/${SEEDER}`, async (req, res) => {
+seedRouter.get(`/${SEEDER}`, async (req, res) => {
 	await User.deleteMany({});
 	await Elsewhere.deleteMany({});
 	await Rating.deleteMany({});
@@ -56,4 +56,4 @@ seeder.get(`/${SEEDER}`, async (req, res) => {
 	res.send('seeded!!!');
 });
 
-module.exports = seeder;
+module.exports = seedRouter;

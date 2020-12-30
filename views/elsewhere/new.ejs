@@ -1,1 +1,83 @@
 <% layout('layout/template')%>
+
+<div class="col-md-6 offset-md-3">
+	<form
+		action="/elsewhere"
+		method="POST"
+		novalidate
+		class="row g-3 needs-validation"
+	>
+		<h1 class="text-center">New Experience</h1>
+
+		<div>
+			<label for="title" class="form-label">Title</label>
+			<input
+				type="text"
+				class="form-control"
+				id="title"
+				name="elsewhere[title]"
+				required
+			/>
+			<div class="valid-feedback">Looks good!</div>
+		</div>
+		
+		<div>
+		<label for="quin" class="form-label">Quin</label>
+		<div class="input-group">
+			<span class="input-group-text">Q</span>
+		<input
+			type="number"
+			class="form-control"
+			id="quin"
+			name="elsewhere[quin]"
+			min="1"
+			placeholder="1"
+			step="1"
+			required
+		/>
+		</div>
+		<div class="valid-feedback">
+			Looks good!
+	</div>
+	</div>
+
+		<div>
+		<label for="location" class="form-label">Location</label>
+		<input
+			class="form-control"
+			list="datalistOptions"
+			id="location"
+			placeholder="Type to search..."
+			name='elsewhere[location]'
+			required
+		/>
+		<datalist id="datalistOptions">
+			<option value="San Francisco"></option>
+			<option value="New York"></option>
+			<option value="Seattle"></option>
+			<option value="Los Angeles"></option>
+			<option value="Chicago"></option>
+		</datalist>
+		<div class="valid-feedback">
+			Looks good!
+	</div>
+	</div>
+
+	<div class="form-file custom-file">
+		<label for="image" class="form-file-label">Image</label>
+		<input type="file" class="form-control form-file-input" id="image" name='elsewhere[image]' multiple required/>
+		<div class="valid-feedback">
+			Looks good!
+	</div>
+	</div>
+
+		<div>
+		<label for="description" class="form-label">Description</label>
+		<textarea type="text" class="form-control" id="description" name="elsewhere[description]" required/></textarea>
+		<div class="valid-feedback">
+			Looks good!
+	</div>
+	</div>
+	<div><button class="btn btn-primary">Add Experience</button></div>
+	</form>
+</div>
