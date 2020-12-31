@@ -13,6 +13,7 @@ const app = express();
 require('dotenv').config();
 const { PORT } = process.env || 3003;
 const { MONGODB_URI } = process.env;
+const secret = process.env.SECRET;
 
 mongoose
 	.connect(MONGODB_URI, {
@@ -35,7 +36,7 @@ app.use(express.json());
 app.use(methodOverride('_method'));
 app.use(
 	session({
-		secret: process.env.SECRET,
+		secret,
 		resave: false,
 		saveUninitialized: false,
 		cookie: {
