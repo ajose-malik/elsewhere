@@ -1,1 +1,10 @@
 <% layout('layout/template')%>
+<h1>All Experiences</h1>
+
+<ul>
+	<% for (let elsewhere of elsewheres){%>
+	<li>
+		<a href="/elsewhere/<%= elsewhere.id %>"><%= elsewhere.title %></a>
+	</li>
+	<% }%>
+</ul>

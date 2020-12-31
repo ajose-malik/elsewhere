@@ -1,1 +1,24 @@
 <% layout('layout/template')%>
+<h1>Edit Elsewhere</h1>
+<form action="/elsewhere/<%=elsewhere.id%>?_method=PUT" method="POST">
+	<div>
+		<label for="title">Title</label>
+		<input
+			type="text"
+			id="title"
+			name="elsewhere[title]"
+			value="<%=elsewhere.title %>"
+		/>
+	</div>
+	<div>
+		<label for="location">Location</label>
+		<input
+			type="text"
+			id="location"
+			name="elsewhere[location]"
+			value="<%= elsewhere.location%>"
+		/>
+	</div>
+	<button>Update Elsewhere</button>
+</form>
+<a href="/elsewhere/<%= elsewhere.id%>">Back To Elsewhere</a>

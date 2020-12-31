@@ -1,1 +1,13 @@
 <% layout('layout/template')%>
+
+    <h1><%= elsewhere.title %></h1>
+    <h2><%= elsewhere.location %></h2>
+    <p> <a href="/elsewhere/<%=elsewhere.id%>/edit">Edit</a></p>
+    <p>
+    <form action="/elsewhere/<%=elsewhere.id%>?_method=DELETE" method="POST">
+        <button>Delete</button>
+    </form>
+    </p>
+    <footer>
+        <a href="/elsewhere">All Elsewheres</a>
+    </footer>
