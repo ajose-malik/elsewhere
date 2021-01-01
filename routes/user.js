@@ -1,5 +1,7 @@
 const bcrypt = require('bcrypt');
 const express = require('express');
+const { validateUser } = require('../utils/middleware');
+const catchAsync = require('../utils/catchAsync');
 const userRouter = express.Router();
 const User = require('../models/user');
 
@@ -7,15 +9,18 @@ userRouter.get('/sign-up', (req, res) => {
 	res.render('user/sign-up');
 });
 
-userRouter.post('/sign-up', async (req, res) => {
-	const { user } = req.body;
-	user.password = bcrypt.hashSync(user.password, bcrypt.genSaltSync(10));
+userRouter.post(
+	'/sign-up',
+	validateUser,
+	catchAsync(async (req, res) => {
+		const { user } = req.body;
+		user.password = bcrypt.hashSync(user.password, bcrypt.genSaltSync(10));
 
-	const newUser = new User(user);
-	await newUser.save();
-	console.log(user);
-	res.send('signed-up!!!');
-});
+		const newUser = new User(user);
+		await newUser.save();
+		res.send('signed-up!!!');
+	})
+);
 
 userRouter.get('/sign-in', (req, res) => {
 	res.render('user/sign-in');
