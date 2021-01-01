@@ -1,7 +1,9 @@
 const express = require('express');
 const elseRouter = express.Router();
 const Elsewhere = require('../models/elsewhere');
-const { validateElse } = require('../utils/middleware');
+const Rating = require('../models/rating');
+const { validateElse, validateRating } = require('../utils/middleware');
+const catchAsync = require('../utils/catchAsync');
 
 elseRouter.get('/', async (req, res) => {
 	const elsewheres = await Elsewhere.find({});
@@ -44,5 +46,22 @@ elseRouter.delete('/:id', async (req, res) => {
 	await Elsewhere.findByIdAndDelete(id);
 	res.redirect('/elsewhere');
 });
+
+elseRouter.post(
+	'/:id/rating',
+	validateRating,
+	catchAsync(async (req, res) => {
+		const { id } = req.params;
+		const { rating } = req.body;
+		const elsewhere = await Elsewhere.findById(id);
+		const rated = new Rating(rating);
+		await rated.save();
+
+		elsewhere.rating.push(rated);
+		await elsewhere.save();
+		console.log(elsewhere);
+		res.redirect(`/elsewhere/${elsewhere.id}`);
+	})
+);
 
 module.exports = elseRouter;

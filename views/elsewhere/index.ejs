@@ -1,10 +1,26 @@
 <% layout('layout/template')%>
 <h1>All Experiences</h1>
 
-<ul>
-	<% for (let elsewhere of elsewheres){%>
-	<li>
-		<a href="/elsewhere/<%= elsewhere.id %>"><%= elsewhere.title %></a>
-	</li>
-	<% }%>
-</ul>
+<div>
+	<a href="/elsewhere/new">Add Experience</a>
+</div>
+
+<% for (let elsewhere of elsewheres){%>
+<div class="card" mb-3>
+	<div class="row">
+		<div class="col-md-4">
+			<img class="img-fluid" alt="" src="<%=elsewhere.image%>" />
+		</div>
+		<div class="col-md-8">
+			<div class="card-body">
+				<h5 class="card-title"><%= elsewhere.title %></h5>
+				<p class="card-text"><%= elsewhere.description %></p>
+				<p class="card-text">
+					<small class="text-muted"><%= elsewhere.location%></small>
+				</p>
+				<a href="/elsewhere/<%= elsewhere.id %>"><%= elsewhere.title %></a>
+			</div>
+		</div>
+	</div>
+</div>
+<% }%>

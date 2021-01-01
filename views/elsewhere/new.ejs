@@ -1,14 +1,13 @@
 <% layout('layout/template')%>
 
 <div class="col-md-6 offset-md-3">
+	<h1 class="text-center">New Experience</h1>
 	<form
-		action="/elsewhere"
-		method="POST"
-		novalidate
-		class="row g-3 needs-validation"
+	action="/elsewhere"
+	method="POST"
+	novalidate
+	class="needs-validation"
 	>
-		<h1 class="text-center">New Experience</h1>
-
 		<div>
 			<label for="title" class="form-label">Title</label>
 			<input
@@ -22,7 +21,7 @@
 		</div>
 		
 		<div>
-		<label for="quin" class="form-label">Quin</label>
+		<label for="quin" class="form-label">Price</label>
 		<div class="input-group">
 			<span class="input-group-text">Q</span>
 		<input
@@ -78,6 +77,6 @@
 			Looks good!
 	</div>
 	</div>
-	<div><button class="btn btn-primary">Add Experience</button></div>
+	<div class='mt-3'><button class="btn btn-primary">Add Experience</button></div>
 	</form>
 </div>

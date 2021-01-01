@@ -1,13 +1,41 @@
 <% layout('layout/template')%>
 
-    <h1><%= elsewhere.title %></h1>
-    <h2><%= elsewhere.location %></h2>
-    <p> <a href="/elsewhere/<%=elsewhere.id%>/edit">Edit</a></p>
-    <p>
-    <form action="/elsewhere/<%=elsewhere.id%>?_method=DELETE" method="POST">
-        <button>Delete</button>
-    </form>
-    </p>
-    <footer>
-        <a href="/elsewhere">All Elsewheres</a>
-    </footer>
+<div class="col-6">
+	<div class="card mb-3">
+		<!-- <img src="<%= elsewhere.image%>" class="card-img-top" /> -->
+		<div class="card-body">
+			<h5 class="card-title"><%= elsewhere.title %></h5>
+			<p class="card-text"><%= elsewhere.description%></p>
+		</div>
+		<ul class="list-group list-group-flush">
+			<li class="list-group-item text-muted"><%= elsewhere.location %></li>
+			<li class="list-group-item">Q<%= elsewhere.quin%></li>
+		</ul>
+
+		<div class="col-6">
+			<h5>Leave a rating</h5>
+			<form
+				action="/elsewhere/<%=elsewhere.id%>/rating"
+				method="POST"
+				class="mb-3 needs-validation"
+				novalidate
+			>
+				<div class="mb-3">
+					<label class="form-label" for="rating">Rating</label>
+					<input
+						class="form-range"
+						type="range"
+						min="1"
+						max="5"
+						name="rating[star]"
+						id="rating"
+					/>
+				</div>
+				<button class="btn btn-success">Submit</button>
+			</form>
+			<footer>
+				<a href="/elsewhere">All Elsewheres</a>
+			</footer>
+		</div>
+	</div>
+</div>

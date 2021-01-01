@@ -25,7 +25,7 @@ module.exports.imageValidator = Joi.object({
 });
 
 module.exports.ratingValidator = Joi.object({
-	elsewhere: Joi.object({
-		rating: Joi.number().required().min(1).max(5)
+	rating: Joi.object({
+		star: Joi.number().required().min(1).max(5)
 	}).required()
 });

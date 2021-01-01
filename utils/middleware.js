@@ -1,4 +1,8 @@
-const { userValidator, elseValidator } = require('../utils/validate-schema');
+const {
+	userValidator,
+	elseValidator,
+	ratingValidator
+} = require('../utils/validate-schema');
 const User = require('../models/user');
 const Elsewhere = require('../models/elsewhere');
 const ExpressError = require('./expressError');
@@ -28,6 +32,24 @@ module.exports.validateElse = async (req, res, next) => {
 		const errMsg = 'Title already exists';
 		next(new ExpressError(400, errMsg));
 	} else if (error) {
+		const errMsg = error.details.map(err => err.message).join(',');
+		next(new ExpressError(400, errMsg));
+	} else {
+		next();
+	}
+};
+
+module.exports.validateRating = async (req, res, next) => {
+	const { error } = ratingValidator.validate(req.body);
+	// const { rating } = req.body.elsewhere;
+	// const existingRating = await Elsewhere.findOne({ rating });
+
+	// if (existingTitle) {
+	// 	const errMsg = 'Title already exists';
+	// 	next(new ExpressError(400, errMsg));
+	// } else
+
+	if (error) {
 		const errMsg = error.details.map(err => err.message).join(',');
 		next(new ExpressError(400, errMsg));
 	} else {
