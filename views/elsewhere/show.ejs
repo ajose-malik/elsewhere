@@ -33,6 +33,11 @@
 				</div>
 				<button class="btn btn-success">Submit</button>
 			</form>
+
+			<form action="/elsewhere/<%=elsewhere.id%>?_method=DELETE" method="POST">
+				<button class="btn btn-danger">Delete</button>
+			</form>
+
 			<footer>
 				<a href="/elsewhere">All Elsewheres</a>
 			</footer>

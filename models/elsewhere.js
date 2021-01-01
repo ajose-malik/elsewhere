@@ -12,4 +12,16 @@ const elsewhereSchema = new Schema({
 	image: []
 });
 
+// Pre/Post Hook Mongoose Middleware /////////////////////////////
+
+elsewhereSchema.post('findOneAndDelete', async function (elsewhere) {
+	if (elsewhere) {
+		await Rating.deleteMany({
+			_id: {
+				$in: elsewhere.rating
+			}
+		});
+	}
+});
+
 module.exports = mongoose.model('Elsewhere', elsewhereSchema);
