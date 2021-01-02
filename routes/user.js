@@ -18,7 +18,9 @@ userRouter.post(
 
 		const newUser = new User(user);
 		await newUser.save();
-		res.send('signed-up!!!');
+
+		// const message = `Hi ${user.username}`;
+		// res.render('message', { message });
 	})
 );
 
@@ -31,14 +33,16 @@ userRouter.post('/sign-in', async (req, res) => {
 	const user = await User.findOne({ username });
 
 	if (!user) {
-		res.send('no user found');
+		req.flash('error', 'Username is incorrect');
+		res.redirect('sign-in');
 	} else {
 		if (bcrypt.compareSync(password, user.password)) {
 			req.session.currentUser = user;
-			console.log(req.session);
-			res.redirect('/');
+			req.flash('message', `Welcome back ${user.username}`);
+			res.redirect('sign-in');
 		} else {
-			res.send('password does not match');
+			req.flash('error', 'Password does not match');
+			res.redirect('sign-in');
 		}
 	}
 });

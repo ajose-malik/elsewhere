@@ -16,7 +16,7 @@
 
 	<body class="d-flex flex-column vh-100">
 		<%- include('../partial/navbar')%>
-		<main class="container mt-3"><%- body %></main>
+		<main class="container mt-3"><%- include('../message')%> <%- body %></main>
 		<%- include('../partial/footer')%>
 
 		<script
@@ -24,6 +24,6 @@
 			integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW"
 			crossorigin="anonymous"
 		></script>
-		<script src="/script/validate-form.js"></script>
+		<script src="/javascript/validate-form.js"></script>
 	</body>
 </html>

@@ -1,11 +1,11 @@
+const User = require('../models/user');
+const Elsewhere = require('../models/elsewhere');
+const ExpressError = require('./expressError');
 const {
 	userValidator,
 	elseValidator,
 	ratingValidator
 } = require('../utils/validate-schema');
-const User = require('../models/user');
-const Elsewhere = require('../models/elsewhere');
-const ExpressError = require('./expressError');
 
 module.exports.validateUser = async (req, res, next) => {
 	const { error } = userValidator.validate(req.body);

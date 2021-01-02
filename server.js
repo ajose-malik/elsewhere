@@ -4,6 +4,7 @@ const methodOverride = require('method-override');
 const ejsMate = require('ejs-mate');
 const mongoose = require('mongoose');
 const session = require('express-session');
+const flash = require('connect-flash');
 const elseRouter = require('./routes/elsewhere');
 const seedRouter = require('./routes/seeder');
 const userRouter = require('./routes/user');
@@ -36,18 +37,23 @@ app.use(express.json());
 app.use(methodOverride('_method'));
 app.use(
 	session({
+		name: 'harlequin shrimp',
 		secret,
 		resave: false,
 		saveUninitialized: false,
 		cookie: {
-			name: 'harlequin shrimp',
-			secure: true,
 			httpOnly: true,
 			expires: Date.now() + 1000 * 60 * 60 * 24 * 7,
 			maxAge: 1000 * 60 * 60 * 24 * 7
 		}
 	})
 );
+app.use(flash());
+app.use((req, res, next) => {
+	res.locals.message = req.flash('message');
+	res.locals.error = req.flash('error');
+	next();
+});
 
 // Routers ///////////////////////////////////////////////////////////////////////////////
 app.use('/elsewhere', elseRouter);
@@ -60,8 +66,9 @@ app.get('/', (req, res) => {
 });
 
 app.use((err, req, res, next) => {
-	const { statusCode = 500, message = 'Something is Wrong' } = err;
-	res.status(statusCode).render('error', { message });
+	const { statusCode = 500, message = 'Something went wrong!' } = err;
+	req.flash('error', message);
+	res.status(statusCode).redirect('/');
 });
 
 app.listen(3000, () => {
