@@ -19,8 +19,10 @@ userRouter.post(
 		const newUser = new User(user);
 		await newUser.save();
 
-		// const message = `Hi ${user.username}`;
-		// res.render('message', { message });
+		req.session.currentUser = newUser.id;
+		console.log(req.session);
+		req.flash('message', `Hi ${user.username}`);
+		res.redirect('/');
 	})
 );
 
@@ -33,24 +35,23 @@ userRouter.post('/sign-in', async (req, res) => {
 	const user = await User.findOne({ username });
 
 	if (!user) {
-		req.flash('error', 'Username is incorrect');
-		res.redirect('sign-in');
+		req.flash('error', 'Incorrect username or password');
+		return res.redirect('sign-in');
 	} else {
 		if (bcrypt.compareSync(password, user.password)) {
-			req.session.currentUser = user;
+			req.session.currentUser = user.id;
 			req.flash('message', `Welcome back ${user.username}`);
-			res.redirect('sign-in');
+			return res.redirect('/elsewhere');
 		} else {
-			req.flash('error', 'Password does not match');
-			res.redirect('sign-in');
+			req.flash('error', 'Incorrect username or password');
+			return res.redirect('sign-in');
 		}
 	}
 });
 
-userRouter.delete('/', (req, res) => {
-	req.session.destroy(() => {
-		res.redirect('/');
-	});
+userRouter.delete('/sign-out', (req, res) => {
+	req.session.destroy();
+	res.redirect('/');
 });
 
 module.exports = userRouter;

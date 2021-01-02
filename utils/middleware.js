@@ -6,6 +6,7 @@ const {
 	elseValidator,
 	ratingValidator
 } = require('../utils/validate-schema');
+const elsewhere = require('../models/elsewhere');
 
 module.exports.validateUser = async (req, res, next) => {
 	const { error } = userValidator.validate(req.body);
@@ -13,11 +14,12 @@ module.exports.validateUser = async (req, res, next) => {
 	const existingUser = await User.findOne({ username });
 
 	if (existingUser) {
-		const errMsg = 'Username already exists';
-		next(new ExpressError(400, errMsg));
+		req.flash('error', 'Username already exists');
+		res.redirect('sign-up');
 	} else if (error) {
-		const errMsg = error.details.map(err => err.message).join(',');
-		next(new ExpressError(400, errMsg));
+		const message = error.details.map(err => err.message).join(',');
+		req.flash('error', message);
+		res.redirect('sign-up');
 	} else {
 		next();
 	}
@@ -52,6 +54,15 @@ module.exports.validateRating = async (req, res, next) => {
 	if (error) {
 		const errMsg = error.details.map(err => err.message).join(',');
 		next(new ExpressError(400, errMsg));
+	} else {
+		next();
+	}
+};
+
+module.exports.isAuth = (req, res, next) => {
+	if (!req.session.currentUser) {
+		req.flash('error', 'Please sign-in');
+		res.redirect('/user/sign-in');
 	} else {
 		next();
 	}

@@ -70,7 +70,3 @@ app.use((err, req, res, next) => {
 	req.flash('error', message);
 	res.status(statusCode).redirect('/');
 });
-
-app.listen(3000, () => {
-	console.log('Serving on port 3000');
-});

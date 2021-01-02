@@ -2,10 +2,10 @@ const express = require('express');
 const elseRouter = express.Router();
 const Elsewhere = require('../models/elsewhere');
 const Rating = require('../models/rating');
-const { validateElse, validateRating } = require('../utils/middleware');
+const { validateElse, validateRating, isAuth } = require('../utils/middleware');
 const catchAsync = require('../utils/catchAsync');
 
-elseRouter.get('/', async (req, res) => {
+elseRouter.get('/', isAuth, async (req, res) => {
 	const elsewheres = await Elsewhere.find({});
 	res.render('elsewhere/index', { elsewheres });
 });
