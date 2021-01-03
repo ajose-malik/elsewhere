@@ -2,6 +2,7 @@ const express = require('express');
 const elseRouter = express.Router();
 const Elsewhere = require('../models/elsewhere');
 const Rating = require('../models/rating');
+const User = require('../models/user');
 const {
 	validateElse,
 	validateEditElse,
@@ -10,7 +11,6 @@ const {
 	isAuthor
 } = require('../utils/middleware');
 const catchAsync = require('../utils/catchAsync');
-const user = require('../models/user');
 
 elseRouter.get('/', isAuth, async (req, res) => {
 	const elsewheres = await Elsewhere.find({});
@@ -31,12 +31,11 @@ elseRouter.post('/', isAuth, validateElse, async (req, res) => {
 
 elseRouter.get('/:id', isAuth, async (req, res) => {
 	const { id } = req.params;
-	const elsewhere = await Elsewhere.findById(id);
-	const { currentUser } = req.session;
-	console.log(req.session);
+	const elsewhere = await Elsewhere.findById(id)
+		.populate('rating')
+		.populate('author');
 	console.log(elsewhere);
-	// .populate('rating')
-	// .populate('author');
+	const { currentUser } = req.session;
 	res.render('elsewhere/show', { elsewhere, currentUser });
 });
 
@@ -70,22 +69,18 @@ elseRouter.post(
 		const { rating } = req.body;
 		const elsewhere = await Elsewhere.findById(id);
 		const rated = new Rating(rating);
-		rated.patron = req.session.currentUser;
+
+		const currentUser = await User.findById(req.session.currentUser);
+		rated.patron = currentUser.username;
 		await rated.save();
 
-		if (rated.patron) elsewhere.rating.push(rated.patron);
+		if (rated.patron) elsewhere.rating.push(rated);
 		await elsewhere.save();
-		const author = await user.findById(elsewhere.author);
-		if (!author.quin) {
-			author.quin = Number(rating.star / 5);
-		} else {
-			author.quin += Number(rating.star / 5);
-		}
+
+		const author = await User.findById(elsewhere.author);
+		author.quin += Number(rating.star / 5);
+
 		await author.save();
-		req.session.quin = author.quin;
-		console.log(elsewhere);
-		console.log(author);
-		console.log(req.session);
 		res.redirect(`/elsewhere/${elsewhere.id}`);
 	})
 );

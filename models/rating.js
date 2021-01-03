@@ -3,7 +3,7 @@ const { Schema } = mongoose;
 
 const ratingSchema = new Schema({
 	star: Number,
-	patron: Schema.Types.ObjectId
+	patron: String
 });
 
 module.exports = mongoose.model('Rating', ratingSchema);

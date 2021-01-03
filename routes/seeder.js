@@ -11,33 +11,8 @@ require('dotenv').config();
 const { SEEDER } = process.env;
 
 seedRouter.get(`/${SEEDER}`, async (req, res) => {
-	// await User.deleteMany({});
-	// await Elsewhere.deleteMany({});
-	// await Rating.deleteMany({});
-	// await Image.deleteMany({});
-
 	for (let i = 0; i < 5; i++) {
-		// const randNum = Math.floor(Math.random() * (6, 10) + 6);
 		const randGen = Math.floor(Math.random() * cities.length);
-		// const username = faker.name
-		// 	.findName()
-		// 	.substring(0, randNum)
-		// 	.split(' ')
-		// 	.join('_');
-		// const password = faker.internet.password();
-
-		// const user = new User({
-		// 	username: 'popo',
-		// 	password: 'popopo',
-		// 	quin: 10
-		// });
-		// await user.save();
-
-		// const rating = new Rating({
-		// 	star: Math.floor(Math.random() * 5) + 1,
-		// 	patron: user
-		// });
-		// await rating.save();
 
 		const image = new Image({
 			url: faker.image.image(),
@@ -46,12 +21,11 @@ seedRouter.get(`/${SEEDER}`, async (req, res) => {
 		await image.save();
 
 		const elsewhere = new Elsewhere({
-			author: '5ff152a30a8b135208e0cec1',
+			author: '5ff248f4ae987b1e1e956678',
 			location: `${cities[randGen].city}, ${cities[randGen].state}`,
 			title: faker.lorem.word(),
 			description: faker.lorem.paragraph(),
 			quin: Math.floor(Math.random() * 10) + 1,
-			// rating,
 			image: [image]
 		});
 

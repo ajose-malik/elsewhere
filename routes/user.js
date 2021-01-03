@@ -16,7 +16,7 @@ userRouter.post(
 		const { user } = req.body;
 		user.password = bcrypt.hashSync(user.password, bcrypt.genSaltSync(10));
 
-		const newUser = new User(user);
+		const newUser = new User({ ...user, quin: 10 });
 		await newUser.save();
 
 		req.session.currentUser = newUser._id;

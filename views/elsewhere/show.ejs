@@ -1,4 +1,5 @@
 <% layout('layout/template')%>
+<link rel="stylesheet" href="/stylesheet/rating.css" />
 
 <div class="col-6">
 	<div class="card mb-3">
@@ -8,34 +9,55 @@
 			<p class="card-text"><%= elsewhere.description%></p>
 		</div>
 		<ul class="list-group list-group-flush">
+			<li class="list-group-item">Price: Q<%= elsewhere.quin%></li>
 			<li class="list-group-item text-muted"><%= elsewhere.location %></li>
-			<li class="list-group-item">Q<%= elsewhere.quin%></li>
+			<li class="list-group-item text-muted">
+				Curated by <%= elsewhere.author[0].username%>
+			</li>
 		</ul>
 
-		<% if(currentUser && elsewhere.author != currentUser) {%>
+		<% if(currentUser && elsewhere.author[0].id !== currentUser) {%>
 		<div class="col-6">
-			<h5>Leave a rating</h5>
+			<h5>Rate this adventure</h5>
 			<form
 				action="/elsewhere/<%=elsewhere.id%>/rating"
 				method="POST"
 				class="mb-3 needs-validation"
 				novalidate
 			>
-				<div class="mb-3">
-					<label class="form-label" for="rating">Rating</label>
+				<%#Source: https://github.com/LunarLogic/starability%>
+				<fieldset class="starability-basic">
 					<input
-						class="form-range"
-						type="range"
-						min="1"
-						max="5"
+						type="radio"
+						id="no-rate"
+						class="input-no-rate"
 						name="rating[star]"
-						id="rating"
+						value="1"
+						checked
+						aria-label="No rating."
 					/>
-				</div>
+					<input
+						type="radio"
+						id="first-rate1"
+						name="rating[star]"
+						value="1"
+						checked
+					/>
+					<label for="first-rate1" title="Hmm">1 star</label>
+					<input type="radio" id="first-rate2" name="rating[star]" value="2" />
+					<label for="first-rate2" title="Meh">2 stars</label>
+					<input type="radio" id="first-rate3" name="rating[star]" value="3" />
+					<label for="first-rate3" title="Ahh">3 stars</label>
+					<input type="radio" id="first-rate4" name="rating[star]" value="4" />
+					<label for="first-rate4" title="Ooh">4 stars</label>
+					<input type="radio" id="first-rate5" name="rating[star]" value="5" />
+					<label for="first-rate5" title="Oof">5 stars</label>
+				</fieldset>
+
 				<button class="btn btn-success">Submit</button>
 			</form>
 		</div>
-		<% } %> <% if( currentUser && elsewhere.author == currentUser) {%>
+		<% } %> <% if(currentUser && elsewhere.author[0].id === currentUser) {%>
 		<div class="col-6">
 			<div class="card-body">
 				<a
@@ -50,6 +72,13 @@
 				>
 					<button class="btn btn-danger">Delete</button>
 				</form>
+			</div>
+		</div>
+		<% } %> <% for(let rating of elsewhere.rating) { %>
+		<div class="card mb-3">
+			<div class="card-body">
+				<h5 class="card-title">Rated by <%=rating.patron%></h5>
+				<p class="starability-result" data-rating="<%=rating.star%>"></p>
 			</div>
 		</div>
 		<% } %>
