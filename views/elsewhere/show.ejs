@@ -12,6 +12,7 @@
 			<li class="list-group-item">Q<%= elsewhere.quin%></li>
 		</ul>
 
+		<% if(currentUser && elsewhere.author != currentUser) {%>
 		<div class="col-6">
 			<h5>Leave a rating</h5>
 			<form
@@ -33,14 +34,24 @@
 				</div>
 				<button class="btn btn-success">Submit</button>
 			</form>
-
-			<form action="/elsewhere/<%=elsewhere.id%>?_method=DELETE" method="POST">
-				<button class="btn btn-danger">Delete</button>
-			</form>
-
-			<footer>
-				<a href="/elsewhere">All Elsewheres</a>
-			</footer>
 		</div>
+		<% } %> <% if( currentUser && elsewhere.author == currentUser) {%>
+		<div class="col-6">
+			<div class="card-body">
+				<a
+					class="card-link btn btn-info"
+					href="/elsewhere/<%=elsewhere._id%>/edit"
+					>Edit</a
+				>
+				<form
+					class="d-inline"
+					action="/elsewhere/<%=elsewhere.id%>?_method=DELETE"
+					method="POST"
+				>
+					<button class="btn btn-danger">Delete</button>
+				</form>
+			</div>
+		</div>
+		<% } %>
 	</div>
 </div>

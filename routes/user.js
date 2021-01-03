@@ -19,7 +19,7 @@ userRouter.post(
 		const newUser = new User(user);
 		await newUser.save();
 
-		req.session.currentUser = newUser.id;
+		req.session.currentUser = newUser._id;
 		console.log(req.session);
 		req.flash('message', `Hi ${user.username}`);
 		res.redirect('/');
@@ -39,7 +39,7 @@ userRouter.post('/sign-in', async (req, res) => {
 		return res.redirect('sign-in');
 	} else {
 		if (bcrypt.compareSync(password, user.password)) {
-			req.session.currentUser = user.id;
+			req.session.currentUser = user._id;
 			req.flash('message', `Welcome back ${user.username}`);
 			return res.redirect('/elsewhere');
 		} else {
