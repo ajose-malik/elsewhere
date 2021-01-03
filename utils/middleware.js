@@ -4,6 +4,7 @@ const ExpressError = require('./expressError');
 const {
 	userValidator,
 	elseValidator,
+	editElseValidator,
 	ratingValidator
 } = require('../utils/validate-schema');
 const elsewhere = require('../models/elsewhere');
@@ -41,6 +42,19 @@ module.exports.validateElse = async (req, res, next) => {
 	}
 };
 
+module.exports.validateEditElse = async (req, res, next) => {
+	const { id } = req.params;
+	const { error } = editElseValidator.validate(req.body);
+
+	if (error) {
+		const message = error.details.map(err => err.message).join(',');
+		req.flash('error', message);
+		return res.redirect(`/elsewhere/${id}/edit`);
+	} else {
+		next();
+	}
+};
+
 module.exports.validateRating = async (req, res, next) => {
 	const { error } = ratingValidator.validate(req.body);
 	// const { rating } = req.body.elsewhere;
@@ -63,6 +77,17 @@ module.exports.isAuth = (req, res, next) => {
 	if (!req.session.currentUser) {
 		req.flash('error', 'Please sign-in');
 		res.redirect('/user/sign-in');
+	} else {
+		next();
+	}
+};
+
+module.exports.isAuthor = async (req, res, next) => {
+	const { id } = req.params;
+	const elsewhere = await Elsewhere.findById(id);
+	if (elsewhere.author != req.session.currentUser) {
+		req.flash('error', `You don't have permission`);
+		return res.redirect(`/elsewhere/${id}`);
 	} else {
 		next();
 	}

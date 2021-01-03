@@ -2,7 +2,13 @@ const express = require('express');
 const elseRouter = express.Router();
 const Elsewhere = require('../models/elsewhere');
 const Rating = require('../models/rating');
-const { validateElse, validateRating, isAuth } = require('../utils/middleware');
+const {
+	validateElse,
+	validateEditElse,
+	validateRating,
+	isAuth,
+	isAuthor
+} = require('../utils/middleware');
 const catchAsync = require('../utils/catchAsync');
 const user = require('../models/user');
 
@@ -40,11 +46,12 @@ elseRouter.get('/:id/edit', isAuth, async (req, res) => {
 	res.render('elsewhere/edit', { elsewhere });
 });
 
-elseRouter.put('/:id', isAuth, async (req, res) => {
+elseRouter.put('/:id', isAuth, isAuthor, validateEditElse, async (req, res) => {
 	const { id } = req.params;
 	const elsewhere = await Elsewhere.findByIdAndUpdate(id, {
 		...req.body.elsewhere
 	});
+	req.flash('message', 'Updated adventure');
 	res.redirect(`/elsewhere/${elsewhere.id}`);
 });
 
@@ -75,7 +82,7 @@ elseRouter.post(
 			author.quin += Number(rating.star / 5);
 		}
 		await author.save();
-		// req.session.quin = author.quin;
+		req.session.quin = author.quin;
 		console.log(elsewhere);
 		console.log(author);
 		console.log(req.session);

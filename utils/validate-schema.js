@@ -10,6 +10,14 @@ module.exports.elseValidator = Joi.object({
 	}).required()
 });
 
+module.exports.editElseValidator = Joi.object({
+	elsewhere: Joi.object({
+		description: Joi.string().required(),
+		quin: Joi.number().required().min(0),
+		image: Joi.required()
+	}).required()
+});
+
 module.exports.userValidator = Joi.object({
 	user: Joi.object({
 		username: Joi.string().required().min(4),
