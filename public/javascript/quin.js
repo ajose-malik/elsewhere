@@ -1,5 +1,5 @@
 (function () {
 	'use strict';
-	const quin = document.querySelector('#quin');
-	quin.innerHTML = 'wtf';
+	const currentUserQuin = document.querySelector('#quin');
+	currentUserQuin.innerHTML = 'WTF';
 })();

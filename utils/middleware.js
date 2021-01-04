@@ -7,7 +7,6 @@ const {
 	editElseValidator,
 	ratingValidator
 } = require('../utils/validate-schema');
-const elsewhere = require('../models/elsewhere');
 
 module.exports.validateUser = async (req, res, next) => {
 	const { error } = userValidator.validate(req.body);

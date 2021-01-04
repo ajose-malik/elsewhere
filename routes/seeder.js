@@ -11,7 +11,7 @@ require('dotenv').config();
 const { SEEDER } = process.env;
 
 seedRouter.get(`/${SEEDER}`, async (req, res) => {
-	for (let i = 0; i < 5; i++) {
+	for (let i = 0; i < 2; i++) {
 		const randGen = Math.floor(Math.random() * cities.length);
 
 		const image = new Image({
@@ -21,7 +21,7 @@ seedRouter.get(`/${SEEDER}`, async (req, res) => {
 		await image.save();
 
 		const elsewhere = new Elsewhere({
-			author: '5ff248f4ae987b1e1e956678',
+			author: '5ff2ab2b4918454a19ac8a6c',
 			location: `${cities[randGen].city}, ${cities[randGen].state}`,
 			title: faker.lorem.word(),
 			description: faker.lorem.paragraph(),

@@ -38,6 +38,7 @@ elseRouter.get('/:id', isAuth, async (req, res) => {
 	const { currentUser } = req.session;
 	const currentUserInfo = await User.findById(currentUser);
 	const { username } = currentUserInfo;
+	console.log(username);
 	res.render('elsewhere/show', { elsewhere, currentUser, username });
 });
 
@@ -80,9 +81,9 @@ elseRouter.post(
 		await elsewhere.save();
 
 		const author = await User.findById(elsewhere.author);
-		author.quin += Number(rating.star / 5);
-
+		author.quin += rating.star / 5;
 		await author.save();
+
 		res.redirect(`/elsewhere/${elsewhere.id}`);
 	})
 );
