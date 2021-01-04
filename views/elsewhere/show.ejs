@@ -16,7 +16,9 @@
 			</li>
 		</ul>
 
-		<% if(currentUser && elsewhere.author[0].id !== currentUser) {%>
+		<% if(currentUser && elsewhere.author[0].id !== currentUser &&
+		(elsewhere.rating.find(rating => rating.patron !== userString) ||
+		!elsewhere.rating.length)) {%>
 		<div class="col-6">
 			<h5>Rate this adventure</h5>
 			<form
