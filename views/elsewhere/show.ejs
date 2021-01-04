@@ -17,7 +17,7 @@
 		</ul>
 
 		<% if(currentUser && elsewhere.author[0].id !== currentUser &&
-		(elsewhere.rating.find(rating => rating.patron !== userString) ||
+		(elsewhere.rating.find(rating => rating.patron !== username) ||
 		!elsewhere.rating.length)) {%>
 		<div class="col-6">
 			<h5>Rate this adventure</h5>
@@ -55,7 +55,18 @@
 					<input type="radio" id="first-rate5" name="rating[star]" value="5" />
 					<label for="first-rate5" title="Oof">5 stars</label>
 				</fieldset>
-
+				<div class="mb-3">
+					<label class="form-label" for="comment">Comment</label>
+					<textarea
+						class="form-control"
+						name="rating[comment]"
+						id="comment"
+						cols="30"
+						rows="3"
+						required
+					></textarea>
+					<div class="valid-feedback">Looks good!</div>
+				</div>
 				<button class="btn btn-success">Submit</button>
 			</form>
 		</div>
@@ -79,7 +90,10 @@
 		<% } %> <% for(let rating of elsewhere.rating) { %>
 		<div class="card mb-3">
 			<div class="card-body">
-				<h5 class="card-title">Rated by <%=rating.patron%></h5>
+				<h5 class="card-title">
+					<%=rating.patron%> ~
+					<span class="card-text text-muted"><%= rating.comment %></span>
+				</h5>
 				<p class="starability-result" data-rating="<%=rating.star%>"></p>
 			</div>
 		</div>

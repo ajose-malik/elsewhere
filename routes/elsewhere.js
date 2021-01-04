@@ -38,8 +38,7 @@ elseRouter.get('/:id', isAuth, async (req, res) => {
 	const { currentUser } = req.session;
 	const currentUserInfo = await User.findById(currentUser);
 	const { username } = currentUserInfo;
-	const userString = String(username);
-	res.render('elsewhere/show', { elsewhere, currentUser, userString });
+	res.render('elsewhere/show', { elsewhere, currentUser, username });
 });
 
 elseRouter.get('/:id/edit', isAuth, async (req, res) => {

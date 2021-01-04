@@ -27,6 +27,7 @@ module.exports.userValidator = Joi.object({
 
 module.exports.ratingValidator = Joi.object({
 	rating: Joi.object({
-		star: Joi.number().required().min(1).max(5)
+		star: Joi.number().required().min(1).max(5),
+		comment: Joi.string().required()
 	}).required()
 });
