@@ -1,13 +1,27 @@
 <% layout('layout/template')%>
-<h1>Elsewhere Adventures</h1>
+<h1>Adventures</h1>
 
 <% for (let elsewhere of elsewheres){%>
-<div class="card" mb-3>
+<div class="card col-md-8" mb-3>
 	<div class="row">
-		<div class="col-md-4">
-			<img class="img-fluid" alt="" src="<%=elsewhere.image%>" />
+		<div class="col-md-3">
+			<%if(elsewhere.image.length) {%>
+			<img
+				class="img-fluid img-thumbnail"
+				style="height: 150px; width: 150px"
+				alt="images"
+				src="<%=elsewhere.image[0].url%>"
+			/>
+			<% }else {%>
+			<img
+				class="img-fluid img-thumbnail"
+				style="height: 150px; width: 150px"
+				alt="images"
+				src="https://res.cloudinary.com/majose/image/upload/v1609796598/Elsewhere/adventure_qoi34t.jpg"
+			/>
+			<% } %>
 		</div>
-		<div class="col-md-8">
+		<div class="col-md-9">
 			<div class="card-body">
 				<h5 class="card-title"><%= elsewhere.title %></h5>
 				<p class="card-text"><%= elsewhere.description %></p>

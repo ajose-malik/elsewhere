@@ -3,7 +3,48 @@
 
 <div class="col-6">
 	<div class="card mb-3">
-		<!-- <img src="<%= elsewhere.image%>" class="card-img-top" /> -->
+		<div
+			id="carouselControl"
+			class="carousel carousel-dark slide"
+			data-ride="carousel"
+		>
+			<div class="carousel-inner">
+				<% elsewhere.image.forEach((image, index) => { %>
+				<div
+					class="carousel-item <%= index === 0 ? 'active' : ''%>"
+					data-bs-interval="5000"
+				>
+					<img
+						src="<%= image.url%>"
+						style="height: 300px"
+						class="d-block w-100"
+						alt="images"
+					/>
+				</div>
+				<% }) %>
+			</div>
+			<% if(elsewhere.image.length > 1) {%>
+			<a
+				class="carousel-control-prev"
+				href="#carouselControl"
+				role="button"
+				data-bs-slide="prev"
+			>
+				<span class="carousel-control-prev-icon" aria-hidden="true"></span>
+				<span class="visually-hidden">Prev</span>
+			</a>
+			<a
+				class="carousel-control-next"
+				href="#carouselControl"
+				role="button"
+				data-bs-slide="next"
+			>
+				<span class="carousel-control-next-icon" aria-hidden="true"></span>
+				<span class="visually-hidden">Next</span>
+			</a>
+			<% } %>
+		</div>
+
 		<div class="card-body">
 			<h5 class="card-title"><%= elsewhere.title %></h5>
 			<p class="card-text"><%= elsewhere.description%></p>

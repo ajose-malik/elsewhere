@@ -2,6 +2,11 @@ const mongoose = require('mongoose');
 const { Schema } = mongoose;
 const Rating = require('./rating');
 
+const imageSchema = new Schema({
+	url: String,
+	filename: String
+});
+
 const elsewhereSchema = new Schema({
 	title: { type: String },
 	description: { type: String },
@@ -9,7 +14,7 @@ const elsewhereSchema = new Schema({
 	rating: [{ type: Schema.Types.ObjectId, ref: 'Rating' }],
 	author: [{ type: Schema.Types.ObjectId, ref: 'User' }],
 	location: { type: String },
-	image: []
+	image: [imageSchema]
 });
 
 // Pre/Post Hook Mongoose Middleware /////////////////////////////

@@ -1,5 +1,8 @@
 const express = require('express');
 const elseRouter = express.Router();
+const multer = require('multer');
+const { storage } = require('../utils/cloud-storage');
+const upload = multer({ storage });
 const Elsewhere = require('../models/elsewhere');
 const Rating = require('../models/rating');
 const User = require('../models/user');
@@ -10,52 +13,84 @@ const {
 	isAuth,
 	isAuthor
 } = require('../utils/middleware');
-const catchAsync = require('../utils/catchAsync');
+const catchAsync = require('../utils/catch-async');
 
 elseRouter.get('/', isAuth, async (req, res) => {
 	const elsewheres = await Elsewhere.find({});
 	res.render('elsewhere/index', { elsewheres });
 });
 
-elseRouter.get('/new', isAuth, (req, res) => {
-	res.render('elsewhere/new');
-});
+elseRouter.get(
+	'/new',
+	// isAuth,
+	(req, res) => {
+		res.render('elsewhere/new');
+	}
+);
 
-elseRouter.post('/', isAuth, validateElse, async (req, res) => {
-	const { elsewhere } = req.body;
-	const newElsewhere = new Elsewhere(elsewhere);
-	newElsewhere.author = req.session.currentUser;
-	await newElsewhere.save();
-	res.redirect(`/elsewhere/${newElsewhere.id}`);
-});
+elseRouter.post(
+	'/',
+	isAuth,
+	upload.array('image'),
+	// validateElse,
+	async (req, res) => {
+		const { elsewhere } = req.body;
+		const newElsewhere = new Elsewhere(elsewhere);
 
-elseRouter.get('/:id', isAuth, async (req, res) => {
+		newElsewhere.author = req.session.currentUser;
+		newElsewhere.image = req.files.map(image => ({
+			url: image.path,
+			filename: image.filename
+		}));
+
+		await newElsewhere.save();
+		res.redirect(`/elsewhere/${newElsewhere.id}`);
+	}
+);
+
+elseRouter.get('/:id', async (req, res) => {
 	const { id } = req.params;
 	const elsewhere = await Elsewhere.findById(id)
 		.populate('rating')
 		.populate('author');
-	console.log(elsewhere);
 	const { currentUser } = req.session;
 	const currentUserInfo = await User.findById(currentUser);
-	const { username } = currentUserInfo;
-	console.log(username);
-	res.render('elsewhere/show', { elsewhere, currentUser, username });
+	if (currentUserInfo) {
+		const { username } = currentUserInfo;
+		return res.render('elsewhere/show', { elsewhere, currentUser, username });
+	} else {
+		return res.redirect('/user/sign-in');
+	}
 });
 
-elseRouter.get('/:id/edit', isAuth, async (req, res) => {
+elseRouter.get('/:id/edit', async (req, res) => {
 	const { id } = req.params;
 	const elsewhere = await Elsewhere.findById(id);
 	res.render('elsewhere/edit', { elsewhere });
 });
 
-elseRouter.put('/:id', isAuth, isAuthor, validateEditElse, async (req, res) => {
-	const { id } = req.params;
-	const elsewhere = await Elsewhere.findByIdAndUpdate(id, {
-		...req.body.elsewhere
-	});
-	req.flash('message', 'Updated adventure');
-	res.redirect(`/elsewhere/${elsewhere.id}`);
-});
+elseRouter.put(
+	'/:id',
+	isAuth,
+	isAuthor,
+	upload.array('image'),
+	async (req, res) => {
+		const { id } = req.params;
+		const elsewhere = await Elsewhere.findByIdAndUpdate(id, {
+			...req.body.elsewhere
+		});
+
+		const image = req.files.map(image => ({
+			url: image.path,
+			filename: image.filename
+		}));
+		elsewhere.image.push(...image);
+		await elsewhere.save();
+
+		req.flash('message', 'Updated adventure');
+		res.redirect(`/elsewhere/${elsewhere.id}`);
+	}
+);
 
 elseRouter.delete('/:id', async (req, res) => {
 	const { id } = req.params;

@@ -1,7 +1,10 @@
 const bcrypt = require('bcrypt');
 const express = require('express');
+const multer = require('multer');
+const { storage } = require('../utils/cloud-storage');
+const upload = multer({ storage });
 const { validateUser } = require('../utils/middleware');
-const catchAsync = require('../utils/catchAsync');
+const catchAsync = require('../utils/catch-async');
 const userRouter = express.Router();
 const User = require('../models/user');
 
@@ -11,6 +14,7 @@ userRouter.get('/sign-up', (req, res) => {
 
 userRouter.post(
 	'/sign-up',
+	upload.array('photo'),
 	validateUser,
 	catchAsync(async (req, res) => {
 		const { user } = req.body;
@@ -18,9 +22,13 @@ userRouter.post(
 
 		const newUser = new User({ ...user, quin: 10 });
 		await newUser.save();
-
+		console.log(user);
 		req.session.currentUser = newUser._id;
-		console.log(req.session);
+		newUser.photo = req.files.map(photo => ({
+			url: photo.path,
+			filename: photo.filename
+		}));
+		console.log(newUser);
 		req.flash('message', `Hi ${user.username}`);
 		res.redirect('/');
 	})

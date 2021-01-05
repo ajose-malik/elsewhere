@@ -1,6 +1,6 @@
 const User = require('../models/user');
 const Elsewhere = require('../models/elsewhere');
-const ExpressError = require('./expressError');
+const ExpressError = require('./express-error');
 const {
 	userValidator,
 	elseValidator,
