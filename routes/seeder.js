@@ -13,7 +13,7 @@ seedRouter.get(`/${SEEDER}`, async (req, res) => {
 		'https://source.unsplash.com/collection/1023843'
 	];
 
-	for (let i = 0; i < 5; i++) {
+	for (let i = 0; i < 3; i++) {
 		const randGen = Math.floor(Math.random() * cities.length);
 		const randUrl = Math.floor(Math.random() * imageUrl.length);
 		const url = imageUrl[randUrl];
