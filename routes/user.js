@@ -22,7 +22,6 @@ userRouter.post(
 
 		const newUser = new User({ ...user, quin: 10 });
 		await newUser.save();
-		console.log(user);
 		req.session.currentUser = newUser._id;
 		newUser.photo = req.files.map(photo => ({
 			url: photo.path,

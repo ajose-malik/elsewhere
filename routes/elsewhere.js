@@ -1,5 +1,8 @@
 const express = require('express');
 const elseRouter = express.Router();
+const mbxGeocoding = require('@mapbox/mapbox-sdk/services/geocoding');
+const mbxToken = process.env.MAPBOX_TOKEN;
+const mapper = mbxGeocoding({ accessToken: mbxToken });
 const multer = require('multer');
 const { storage } = require('../utils/cloud-storage');
 const upload = multer({ storage });
@@ -30,25 +33,39 @@ elseRouter.get(
 
 elseRouter.post(
 	'/',
-	isAuth,
+	// isAuth,
 	upload.array('image'),
 	// validateElse,
 	async (req, res) => {
 		const { elsewhere } = req.body;
-		const newElsewhere = new Elsewhere(elsewhere);
+		const mapData = await mapper
+			.forwardGeocode({
+				query: elsewhere.location,
+				limit: 1
+			})
+			.send();
 
-		newElsewhere.author = req.session.currentUser;
-		newElsewhere.image = req.files.map(image => ({
-			url: image.path,
-			filename: image.filename
-		}));
+		if (mapData.body.features[0] === undefined) {
+			req.flash('error', 'Location does not exist');
+			return res.redirect('/elsewhere/new');
+		} else {
+			const newElsewhere = new Elsewhere(elsewhere);
+			newElsewhere.geometry = mapData.body.features[0].geometry;
 
-		await newElsewhere.save();
-		res.redirect(`/elsewhere/${newElsewhere.id}`);
+			newElsewhere.author = req.session.currentUser;
+			newElsewhere.image = req.files.map(image => ({
+				url: image.path,
+				filename: image.filename
+			}));
+
+			await newElsewhere.save();
+			console.log(newElsewhere);
+			res.redirect(`/elsewhere/${newElsewhere.id}`);
+		}
 	}
 );
 
-elseRouter.get('/:id', async (req, res) => {
+elseRouter.get('/:id', isAuth, async (req, res) => {
 	const { id } = req.params;
 	const elsewhere = await Elsewhere.findById(id)
 		.populate('rating')

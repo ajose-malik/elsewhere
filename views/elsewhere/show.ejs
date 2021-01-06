@@ -3,6 +3,8 @@
 
 <div class="col-6">
 	<div class="card mb-3">
+		<div id="map" style="height: 300px"></div>
+
 		<div
 			id="carouselControl"
 			class="carousel carousel-dark slide"
@@ -96,6 +98,7 @@
 					<input type="radio" id="first-rate5" name="rating[star]" value="5" />
 					<label for="first-rate5" title="Oof">5 stars</label>
 				</fieldset>
+
 				<div class="mb-3">
 					<label class="form-label" for="comment">Comment</label>
 					<textarea
@@ -141,3 +144,10 @@
 		<% } %>
 	</div>
 </div>
+
+<script>
+	const mbxToken = '<%-process.env.MAPBOX_TOKEN%>';
+	const elsewhere = <%-JSON.stringify(elsewhere)%>
+</script>
+
+<script src="/javascript/map-box.js"></script>

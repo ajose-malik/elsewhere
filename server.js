@@ -1,4 +1,5 @@
 // Required ///////////////////////////////////////////////////////////////////////
+require('dotenv').config();
 const express = require('express');
 const methodOverride = require('method-override');
 const ejsMate = require('ejs-mate');
@@ -11,7 +12,6 @@ const userRouter = require('./routes/user');
 
 // Config /////////////////////////////////////////////////////////////////////////
 const app = express();
-require('dotenv').config();
 const { PORT } = process.env || 3003;
 const { MONGODB_URI } = process.env;
 const secret = process.env.SECRET;
@@ -37,12 +37,13 @@ app.use(express.json());
 app.use(methodOverride('_method'));
 app.use(
 	session({
-		name: 'harlequin shrimp',
+		name: 'Mandarin duck',
 		secret,
 		resave: false,
 		saveUninitialized: false,
 		cookie: {
 			httpOnly: true,
+			// secure: true,
 			expires: Date.now() + 1000 * 60 * 60 * 24 * 7,
 			maxAge: 1000 * 60 * 60 * 24 * 7
 		}
@@ -65,8 +66,8 @@ app.get('/', (req, res) => {
 	res.render('home');
 });
 
-app.use((err, req, res, next) => {
-	const { statusCode = 500, message = 'Something went wrong!' } = err;
-	req.flash('error', message);
-	res.status(statusCode).redirect('/');
-});
+// app.use((err, req, res, next) => {
+// 	const { statusCode = 500, message = 'Something went wrong!' } = err;
+// 	req.flash('error', message);
+// 	res.status(statusCode).redirect('/');
+// });

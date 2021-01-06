@@ -1,4 +1,6 @@
 <% layout('layout/template')%>
+<div id="map-cluster" style="height: 400px"></div>
+
 <h1>Adventures</h1>
 
 <% for (let elsewhere of elsewheres){%>
@@ -34,3 +36,10 @@
 	</div>
 </div>
 <% }%>
+
+<script>
+	const mbxToken = '<%-process.env.MAPBOX_TOKEN%>';
+	const elsewheres = {features: <%-JSON.stringify(elsewheres)%>}
+</script>
+
+<script src="/javascript/map-cluster.js"></script>
