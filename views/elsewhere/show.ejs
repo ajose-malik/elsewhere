@@ -56,7 +56,7 @@
 		<div class="mb-5 mt-4">
 			<h5 class="mb-3"><%= elsewhere.description%></h5>
 			<!-- Delete & Edit -->
-			<% if(currentUser && elsewhere.author[0] === currentUser) {%>
+			<% if(currentUser && username === currentUser) {%>
 			<a
 				class="card-link btn btn-secondary"
 				href="/elsewhere/<%=elsewhere._id%>/edit"
@@ -78,7 +78,7 @@
 		<div id="map" style="height: 30vh" class="mb-4"></div>
 
 		<!-- Ratings -->
-		<% if(currentUser && elsewhere.author[0] !== currentUser &&
+		<% if(currentUser && username !== currentUser &&
 		elsewhere.rating.every(rating => rating.patron !== username) ||
 		!elsewhere.rating.length) {%>
 		<div class="card shadow mb-3">
