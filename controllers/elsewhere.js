@@ -81,24 +81,34 @@ elseRouter.get(
 	})
 );
 
-elseRouter.get(
-	'/:id/edit',
-	isAuth,
-	isAuthor,
-	catchAsync(async (req, res) => {
-		const { id } = req.params;
-		const elsewhere = await Elsewhere.findById(id);
-		res.render('elsewhere/edit', { elsewhere });
-	})
-);
-
 // Edit route
+elseRouter.get('/:id', isAuth, async (req, res) => {
+	const { id } = req.params;
+	const elsewhere = await Elsewhere.findById(id)
+		.populate('rating')
+		.populate('author');
+	const { currentUser } = req.session;
+	const currentUserInfo = await User.findById(currentUser);
+	if (currentUserInfo) {
+		const { username } = currentUserInfo;
+		return res.render('elsewhere/show', { elsewhere, currentUser, username });
+	} else {
+		return res.redirect('/user/sign-in');
+	}
+});
+
+elseRouter.get('/:id/edit', async (req, res) => {
+	const { id } = req.params;
+	const elsewhere = await Elsewhere.findById(id);
+	res.render('elsewhere/edit', { elsewhere });
+});
+
 elseRouter.put(
 	'/:id',
+	// isAuth,
+	// isAuthor,
 	upload.array('image'),
-	isAuth,
-	isAuthor,
-	catchAsync(async (req, res) => {
+	async (req, res) => {
 		const { id } = req.params;
 		const elsewhere = await Elsewhere.findByIdAndUpdate(id, {
 			...req.body.elsewhere
@@ -113,7 +123,7 @@ elseRouter.put(
 
 		req.flash('message', 'Updated adventure');
 		res.redirect(`/elsewhere/${elsewhere.id}`);
-	})
+	}
 );
 
 // Destroy route
