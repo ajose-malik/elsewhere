@@ -1,56 +1,70 @@
 <% layout('layout/template')%>
-
-<div class="col-md-6 offset-md-3">
-	<h1 class="text-center">New Adventure</h1>
-	<form
-	action="/elsewhere"
-	method="POST"
-	novalidate
-	class="needs-validation"
-	enctype="multipart/form-data"
-	>
-		<div>
-			<label for="title" class="form-label">Title</label>
-			<input
-				type="text"
-				class="form-control"
-				id="title"
-				name="elsewhere[title]"
-				required
-			/>
-			<div class="valid-feedback">Looks good!</div>
+	
+<div class="container d-flex justify-content-center align-items-center col-lg-6">
+	<div class="row">
+		<div class="py-4">
+			<h1 class="text-center">
+				Curate <strong>Adventure</strong>
+			</h1>
 		</div>
+	
+	<div class="card shadow">
+	<div class='card-body'>
+		<form
+		action="/elsewhere"
+		method="POST"
+		novalidate
+		class="needs-validation"
+		enctype="multipart/form-data"
+		>
+			<div class='mb-4 mt-3'>
+				<label for="title" class="form-label"><strong>Title</strong></label>
+				<input
+					type="text"
+					class="form-control"
+					id="title"
+					name="elsewhere[title]"
+					required
+				/>
+				<div class="valid-feedback">Looks good!</div>
+			</div>
+	
+			<div class='mb-4'>
+			<label for="location" class="form-label"><strong>Location</strong></label>
+			<input
+				class="form-control"
+				list="datalistOptions"
+				id="location"
+				placeholder="Type to search..."
+				name='elsewhere[location]'
+				required
+			/>	
+			<div class="valid-feedback">
+				Looks good!
+		</div>
+		</div>
+	
+		<div class="form-file custom-file mb-4 ">
+			<label for="image" class="form-file-label"><strong>Image</strong></label>
+			<input type="file" class="form-control form-file-input" id="image" name='image' multiple required/>
+			<div class="valid-feedback">
+				Looks good!
+		</div>
+		</div>
+	
+			<div class='mb-4'>
+			<label for="description" class="form-label"><strong>Description</strong></label>
+			<textarea type="text" class="form-control" id="description" name="elsewhere[description]" required rows='12'/></textarea>
+			<div class="valid-feedback">
+				Looks good!
+		</div>
+		</div>
+		<div class='mb-4'><button class="btn btn-primary">Add Adventure</button></div>
+		</form>
 
-		<div>
-		<label for="location" class="form-label">Location</label>
-		<input
-			class="form-control"
-			list="datalistOptions"
-			id="location"
-			placeholder="Type to search..."
-			name='elsewhere[location]'
-			required
-		/>	
-		<div class="valid-feedback">
-			Looks good!
 	</div>
-	</div>
-
-	<div class="form-file custom-file">
-		<label for="image" class="form-file-label">Image</label>
-		<input type="file" class="form-control form-file-input" id="image" name='image' multiple required/>
-		<div class="valid-feedback">
-			Looks good!
-	</div>
-	</div>
-
-		<div>
-		<label for="description" class="form-label">Description</label>
-		<textarea type="text" class="form-control" id="description" name="elsewhere[description]" required/></textarea>
-		<div class="valid-feedback">
-			Looks good!
-	</div>
-	</div>
-	<div class='mt-3'><button class="btn btn-primary">Add Adventure</button></div>
-	</form>
 </div>
+
+
+
+

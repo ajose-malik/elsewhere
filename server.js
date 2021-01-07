@@ -73,7 +73,6 @@ app.get('/', async (req, res) => {
 
 		elsewhereAtIdxZero.push({ image: image[0].url, elsewhere });
 	}
-	console.log(elsewhereAtIdxZero);
 	res.render('elsewhere/index', { currentUser, elsewhereAtIdxZero });
 });
 

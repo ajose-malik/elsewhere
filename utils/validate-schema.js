@@ -22,8 +22,7 @@ module.exports.editElseValidator = Joi.object({
 module.exports.userValidator = Joi.object({
 	user: Joi.object({
 		username: Joi.string().required().min(4),
-		password: Joi.string().required().min(6),
-		about: Joi.string().required()
+		password: Joi.string().required().min(6)
 	}).required()
 });
 

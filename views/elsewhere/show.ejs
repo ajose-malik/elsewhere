@@ -1,10 +1,17 @@
 <% layout('layout/template')%>
+<div class="py-4">
+	<h1 class="d-inline">
+		<strong><%= elsewhere.title %></strong>
+	</h1>
+	<h5 class="d-inline">
+		<strong>by <%= elsewhere.author[0].username%></strong>
+	</h5>
+</div>
+
 <link rel="stylesheet" href="/stylesheet/rating.css" />
 
-<div class="col-6">
-	<div class="card mb-3">
-		<div id="map" style="height: 300px"></div>
-
+<div class="col-md-12 row mb-3">
+	<div class="col-md-8 row">
 		<div
 			id="carouselControl"
 			class="carousel carousel-dark slide"
@@ -18,7 +25,7 @@
 				>
 					<img
 						src="<%= image.url%>"
-						style="height: 300px"
+						style="height: 50vh"
 						class="d-block w-100"
 						alt="images"
 					/>
@@ -46,98 +53,120 @@
 			</a>
 			<% } %>
 		</div>
-
-		<div class="card-body">
-			<h5 class="card-title"><%= elsewhere.title %></h5>
-			<p class="card-text"><%= elsewhere.description%></p>
+		<div class="mb-5 mt-4">
+			<h5 class="mb-3"><%= elsewhere.description%></h5>
+			<!-- Delete & Edit -->
+			<% if(currentUser && elsewhere.author[0].id === currentUser) {%>
+			<a
+				class="card-link btn btn-secondary"
+				href="/elsewhere/<%=elsewhere._id%>/edit"
+				>Edit</a
+			>
+			<form
+				class="d-inline"
+				action="/elsewhere/<%=elsewhere.id%>?_method=DELETE"
+				method="POST"
+			>
+				<button class="btn btn-danger">Delete</button>
+			</form>
+			<% } %>
 		</div>
-		<ul class="list-group list-group-flush">
-			<li class="list-group-item text-muted"><%= elsewhere.location %></li>
-			<li class="list-group-item text-muted">
-				Curated by <%= elsewhere.author[0].username%>
-			</li>
-		</ul>
+	</div>
 
+	<!-- Map box -->
+	<div class="col-md-4">
+		<div id="map" style="height: 30vh" class="mb-4"></div>
+
+		<!-- Ratings -->
 		<% if(currentUser && elsewhere.author[0].id !== currentUser &&
 		elsewhere.rating.every(rating => rating.patron !== username) ||
 		!elsewhere.rating.length) {%>
-		<div class="col-6">
-			<h5>Rate this adventure</h5>
-			<form
-				action="/elsewhere/<%=elsewhere.id%>/rating"
-				method="POST"
-				class="mb-3 needs-validation"
-				novalidate
-			>
-				<%#Source: https://github.com/LunarLogic/starability%>
-				<fieldset class="starability-basic">
-					<input
-						type="radio"
-						id="no-rate"
-						class="input-no-rate"
-						name="rating[star]"
-						value="1"
-						checked
-						aria-label="No rating."
-					/>
-					<input
-						type="radio"
-						id="first-rate1"
-						name="rating[star]"
-						value="1"
-						checked
-					/>
-					<label for="first-rate1" title="Hmm">1 star</label>
-					<input type="radio" id="first-rate2" name="rating[star]" value="2" />
-					<label for="first-rate2" title="Meh">2 stars</label>
-					<input type="radio" id="first-rate3" name="rating[star]" value="3" />
-					<label for="first-rate3" title="Ahh">3 stars</label>
-					<input type="radio" id="first-rate4" name="rating[star]" value="4" />
-					<label for="first-rate4" title="Ooh">4 stars</label>
-					<input type="radio" id="first-rate5" name="rating[star]" value="5" />
-					<label for="first-rate5" title="Oof">5 stars</label>
-				</fieldset>
-
-				<div class="mb-3">
-					<label class="form-label" for="comment">Comment</label>
-					<textarea
-						class="form-control"
-						name="rating[comment]"
-						id="comment"
-						cols="30"
-						rows="3"
-						required
-					></textarea>
-					<div class="valid-feedback">Looks good!</div>
-				</div>
-				<button class="btn btn-success">Submit</button>
-			</form>
-		</div>
-		<% } %> <% if(currentUser && elsewhere.author[0].id === currentUser) {%>
-		<div class="col-6">
+		<div class="card shadow mb-3">
 			<div class="card-body">
-				<a
-					class="card-link btn btn-info"
-					href="/elsewhere/<%=elsewhere._id%>/edit"
-					>Edit</a
-				>
+				<h5><strong>Rate this adventure</strong></h5>
 				<form
-					class="d-inline"
-					action="/elsewhere/<%=elsewhere.id%>?_method=DELETE"
+					action="/elsewhere/<%=elsewhere.id%>/rating"
 					method="POST"
+					class="mb-3 needs-validation"
+					novalidate
 				>
-					<button class="btn btn-danger">Delete</button>
+					<%#Source: https://github.com/LunarLogic/starability%>
+					<fieldset class="starability-basic">
+						<input
+							type="radio"
+							id="no-rate"
+							class="input-no-rate"
+							name="rating[star]"
+							value="1"
+							checked
+							aria-label="No rating."
+						/>
+						<input
+							type="radio"
+							id="first-rate1"
+							name="rating[star]"
+							value="1"
+							checked
+						/>
+						<label for="first-rate1" title="Hmm">1 star</label>
+						<input
+							type="radio"
+							id="first-rate2"
+							name="rating[star]"
+							value="2"
+						/>
+						<label for="first-rate2" title="Meh">2 stars</label>
+						<input
+							type="radio"
+							id="first-rate3"
+							name="rating[star]"
+							value="3"
+						/>
+						<label for="first-rate3" title="Ahh">3 stars</label>
+						<input
+							type="radio"
+							id="first-rate4"
+							name="rating[star]"
+							value="4"
+						/>
+						<label for="first-rate4" title="Ooh">4 stars</label>
+						<input
+							type="radio"
+							id="first-rate5"
+							name="rating[star]"
+							value="5"
+						/>
+						<label for="first-rate5" title="Oof">5 stars</label>
+					</fieldset>
+
+					<div class="mb-3">
+						<label class="form-label" for="comment"
+							><strong>Comment</strong></label
+						>
+						<textarea
+							class="form-control"
+							name="rating[comment]"
+							id="comment"
+							cols="30"
+							rows="3"
+							required
+						></textarea>
+						<div class="valid-feedback">Looks good!</div>
+					</div>
+					<button class="btn btn-success">Submit</button>
 				</form>
 			</div>
 		</div>
-		<% } %> <% for(let rating of elsewhere.rating) { %>
+		<% } %>
+		<!-- Submitted ratings -->
+		<% for(let rating of elsewhere.rating) { %>
 		<div class="card mb-3">
 			<div class="card-body">
 				<h5 class="card-title">
-					<%=rating.patron%> ~
+					<p><strong class="text-muted"><%=rating.patron%></strong></p>
+					<p class="starability-result" data-rating="<%=rating.star%>"></p>
 					<span class="card-text text-muted"><%= rating.comment %></span>
 				</h5>
-				<p class="starability-result" data-rating="<%=rating.star%>"></p>
 			</div>
 		</div>
 		<% } %>

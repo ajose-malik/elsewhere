@@ -8,16 +8,14 @@
 						src="https://images.unsplash.com/photo-1546435269-527d657231eb?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1008&q=80"
 						alt=""
 						class="card-img-top"
-						style='height: 200px'
+						style='height: 30vh'
 					/>
-					<h5 class="card-title">Sign Up</h5>
+					<h5 class="card-title mt-4 mb-2"><strong>Sign Up</strong></h5>
 					<form
 						action="/user/sign-up"
 						method="POST"
 						class="needs-validation"
 						novalidate 
-						enctype="multipart/form-data"
-
 					>
 						<div class="mb-3">
 							<label class="form-label" for="username">Username</label>
@@ -43,28 +41,12 @@
 							<div class="valid-feedback">Looks good!</div>
 						</div>
 
-						<div class="form-file custom-file mb-3">
-							<label for="photo" class="form-file-label">Photo</label>
-							<input type="file" class="form-control form-file-input" id="photo" name='photo' required/>
-							<div class="valid-feedback">
-								Looks good!
-						</div>
-						</div>
-					
-							<div class='mb-3'>
-							<label for="about" class="form-label">Tell us about yourself</label>
-							<textarea type="text" class="form-control" id="about" name="user[about]" required/></textarea>
-							<div class="valid-feedback">
-								Looks good!
-						</div>
-						</div>
-
 						<button class="btn btn-success btn-block mb-3">Sign Up</button>
 					</form>
 				</div>
 				<a href="/user/sign-in"
 					><div class="card-body">
-						<button class="btn btn-info btn-block" style="width: 100%">
+						<button class="btn btn-dark btn-block" style="width: 100%">
 							Sign In
 						</button>
 					</div></a
