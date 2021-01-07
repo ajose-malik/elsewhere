@@ -15,31 +15,24 @@ const catchAsync = require('../utils/catch-async');
 // Index route
 elseRouter.get(
 	'/',
-	// isAuth,
-	async (req, res) => {
+	catchAsync(async (req, res) => {
 		const elsewheres = await Elsewhere.find({});
 		const { currentUser } = req.body;
 		res.render('home', { elsewheres, currentUser });
-	}
+	})
 );
 
 // New route
-elseRouter.get(
-	'/new',
-	// isAuth,
-	(req, res) => {
-		const { currentUser } = req.body;
-
-		res.render('elsewhere/new', { currentUser });
-	}
-);
+elseRouter.get('/new', isAuth, (req, res) => {
+	const { currentUser } = req.body;
+	res.render('elsewhere/new', { currentUser });
+});
 
 elseRouter.post(
 	'/',
-	// isAuth,
 	upload.array('image'),
-	// validateElse,
-	async (req, res) => {
+	isAuth,
+	catchAsync(async (req, res) => {
 		const { elsewhere } = req.body;
 		const mapData = await mapper
 			.forwardGeocode({
@@ -65,38 +58,47 @@ elseRouter.post(
 
 			res.redirect(`/elsewhere/${newElsewhere.id}`);
 		}
-	}
+	})
 );
 
 // Show route
-elseRouter.get('/:id', isAuth, async (req, res) => {
-	const { id } = req.params;
-	const elsewhere = await Elsewhere.findById(id)
-		.populate('rating')
-		.populate('author');
-	const { currentUser } = req.session;
-	const currentUserInfo = await User.findById(currentUser);
-	if (currentUserInfo) {
-		const { username } = currentUserInfo;
-		return res.render('elsewhere/show', { elsewhere, currentUser, username });
-	} else {
-		return res.redirect('/user/sign-in');
-	}
-});
+elseRouter.get(
+	'/:id',
+	isAuth,
+	catchAsync(async (req, res) => {
+		const { id } = req.params;
+		const elsewhere = await Elsewhere.findById(id)
+			.populate('rating')
+			.populate('author');
+		const { currentUser } = req.session;
+		const currentUserInfo = await User.findById(currentUser);
+		if (currentUserInfo) {
+			const { username } = currentUserInfo;
+			return res.render('elsewhere/show', { elsewhere, currentUser, username });
+		} else {
+			return res.redirect('/user/sign-in');
+		}
+	})
+);
 
-elseRouter.get('/:id/edit', async (req, res) => {
-	const { id } = req.params;
-	const elsewhere = await Elsewhere.findById(id);
-	res.render('elsewhere/edit', { elsewhere });
-});
+elseRouter.get(
+	'/:id/edit',
+	isAuth,
+	isAuthor,
+	catchAsync(async (req, res) => {
+		const { id } = req.params;
+		const elsewhere = await Elsewhere.findById(id);
+		res.render('elsewhere/edit', { elsewhere });
+	})
+);
 
 // Edit route
 elseRouter.put(
 	'/:id',
+	upload.array('image'),
 	isAuth,
 	isAuthor,
-	upload.array('image'),
-	async (req, res) => {
+	catchAsync(async (req, res) => {
 		const { id } = req.params;
 		const elsewhere = await Elsewhere.findByIdAndUpdate(id, {
 			...req.body.elsewhere
@@ -111,20 +113,24 @@ elseRouter.put(
 
 		req.flash('message', 'Updated adventure');
 		res.redirect(`/elsewhere/${elsewhere.id}`);
-	}
+	})
 );
 
 // Destroy route
-elseRouter.delete('/:id', async (req, res) => {
-	const { id } = req.params;
-	await Elsewhere.findByIdAndDelete(id);
-	res.redirect('/elsewhere');
-});
+elseRouter.delete(
+	'/:id',
+	isAuth,
+	isAuthor,
+	catchAsync(async (req, res) => {
+		const { id } = req.params;
+		await Elsewhere.findByIdAndDelete(id);
+		res.redirect('/elsewhere');
+	})
+);
 
 // Rating route
 elseRouter.post(
 	'/:id/rating',
-	isAuth,
 	catchAsync(async (req, res) => {
 		const { id } = req.params;
 		const { rating } = req.body;

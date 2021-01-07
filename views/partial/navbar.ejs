@@ -32,10 +32,10 @@
 						</button>
 					</form>
 				</li>
-				<% }%> <%if (currentUser) { %>
+				<% } else { %>
 				<li class="b-bot">
 					<form action="/user/sign-out?_method=DELETE" method="POST">
-						<button class="btn btn-outline-secondary ms-4" type="submit">
+						<button class="btn btn-outline-secondary ms-3" type="submit">
 							Sign Out
 						</button>
 					</form>

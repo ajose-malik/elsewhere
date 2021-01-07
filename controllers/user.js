@@ -16,7 +16,6 @@ userRouter.get('/sign-up', (req, res) => {
 
 userRouter.post(
 	'/sign-up',
-	upload.array('photo'),
 	validateUser,
 	catchAsync(async (req, res) => {
 		const { user } = req.body;
@@ -27,45 +26,42 @@ userRouter.post(
 		const newUser = new User({ ...user });
 		await newUser.save();
 		req.session.currentUser = newUser._id;
-		newUser.photo = req.files.map(photo => ({
-			url: photo.path,
-			filename: photo.filename
-		}));
-		console.log(newUser);
 		req.flash('message', `Hi ${user.username}`);
-		res.render('/', { currentUser });
+		res.render('home', { currentUser });
 	})
 );
 
 // Sign-in
-
 userRouter.get('/sign-in', (req, res) => {
 	const { currentUser } = req.body;
 
 	res.render('user/sign-in', { currentUser });
 });
 
-userRouter.post('/sign-in', async (req, res) => {
-	const { username, password } = req.body.user;
-	const { currentUser } = req.body;
+userRouter.post(
+	'/sign-in',
+	catchAsync(async (req, res) => {
+		const { username, password } = req.body.user;
+		const { currentUser } = req.body;
 
-	const user = await User.findOne({ username });
+		const user = await User.findOne({ username });
 
-	if (!user) {
-		req.flash('error', 'Incorrect username or password');
-		res.render('user/sign-in', { currentUser });
-	} else {
-		if (bcrypt.compareSync(password, user.password)) {
-			req.session.currentUser = user._id;
-			req.flash('message', `Welcome back ${user.username}`);
-			res.redirect('/elsewhere');
-			// res.render('home', { currentUser });
-		} else {
+		if (!user) {
 			req.flash('error', 'Incorrect username or password');
 			res.render('user/sign-in', { currentUser });
+		} else {
+			if (bcrypt.compareSync(password, user.password)) {
+				req.session.currentUser = user._id;
+				req.flash('message', `Welcome back ${user.username}`);
+				// res.redirect('/elsewhere');
+				res.render('home', { currentUser });
+			} else {
+				req.flash('error', 'Incorrect username or password');
+				res.render('user/sign-in', { currentUser });
+			}
 		}
-	}
-});
+	})
+);
 
 userRouter.delete('/sign-out', (req, res) => {
 	req.session.destroy();
