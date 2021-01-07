@@ -16,7 +16,7 @@ module.exports = [
 		latitude: 34.0522342,
 		longitude: -118.2436849,
 		population: '3884307',
-		rank: '2',
+		rank: '3',
 		state: 'California'
 	},
 	{
