@@ -4,7 +4,7 @@
 		<strong><%= elsewhere.title %></strong>
 	</h1>
 	<h5 class="d-inline">
-		<strong>by <%=username%></strong>
+		<strong>by <%=author.username%></strong>
 	</h5>
 </div>
 
@@ -77,9 +77,9 @@
 		<div id="map" style="height: 30vh" class="mb-4"></div>
 
 		<!-- Ratings -->
-		<% if(currentUser && username !== currentUser &&
-		elsewhere.rating.every(rating => rating.patron !== username) ||
-		!elsewhere.rating.length) {%>
+		<% if(currentUser && elsewhere.author[0]._id !== currentUser && username !==
+		author.username && elsewhere.rating.every(rating => rating.patron !==
+		username) || !elsewhere.rating.length) {%>
 		<div class="card shadow mb-3">
 			<div class="card-body">
 				<h5><strong>Rate this adventure</strong></h5>
