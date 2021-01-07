@@ -1,3 +1,11 @@
 <% layout('layout/template')%>
+<h1 class="py-4">Go <strong>Explore</strong></h1>
+<div id="map-cluster" style="height: 70vh"
+class="d-block w-100""></div>
 
-<h1>Welcome Home</h1>
+<script>
+	const mbxToken = '<%-process.env.MAPBOX_TOKEN%>';
+	const elsewheres = {features: <%-JSON.stringify(elsewheres)%>}
+</script>
+
+<script src="/javascript/map-cluster.js"></script>

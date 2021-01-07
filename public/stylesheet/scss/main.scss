@@ -5,7 +5,34 @@
 
 body,
 html {
-	line-height: 1.6;
+	line-height: 2;
 	font-size: 10px;
-	font-family: 'Roboto', sans-serif;
+	font-family: 'Montserrat Alternates', sans-serif;
+}
+
+#map-cluster {
+	height: 70vh;
+}
+
+.navbar-brand {
+	color: rgba(255, 255, 255, 0.5) !important;
+	border-bottom: 0.5rem solid transparent;
+	font-size: large;
+	font-style: italic;
+}
+
+.nav-link {
+	padding: 0.25rem 0;
+	color: rgba(255, 255, 255, 0.5);
+	margin-left: 1rem;
+	border-bottom: 0.25rem solid transparent;
+}
+
+.nav-link:hover {
+	color: rgba(255, 255, 255, 0.5);
+	border-bottom-color: rgba(255, 255, 255, 0.5);
+}
+
+.carousel-caption {
+	color: rgb(161, 2, 2) !important;
 }

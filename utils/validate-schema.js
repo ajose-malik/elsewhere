@@ -4,7 +4,6 @@ module.exports.elseValidator = Joi.object({
 	elsewhere: Joi.object({
 		title: Joi.string().required(),
 		description: Joi.string().required(),
-		quin: Joi.number().required().min(0),
 		location: Joi.string().required(),
 		geometry: Joi.object({
 			type: Joi.required(),
@@ -15,16 +14,14 @@ module.exports.elseValidator = Joi.object({
 
 module.exports.editElseValidator = Joi.object({
 	elsewhere: Joi.object({
-		description: Joi.string().required(),
-		quin: Joi.number().required().min(0)
+		description: Joi.string().required()
 	}).required()
 });
 
 module.exports.userValidator = Joi.object({
 	user: Joi.object({
 		username: Joi.string().required().min(4),
-		password: Joi.string().required().min(6),
-		about: Joi.string().required()
+		password: Joi.string().required().min(6)
 	}).required()
 });
 

@@ -9,25 +9,28 @@ const upload = multer({ storage });
 const Elsewhere = require('../models/elsewhere');
 const Rating = require('../models/rating');
 const User = require('../models/user');
-const {
-	validateElse,
-	validateEditElse,
-	validateRating,
-	isAuth,
-	isAuthor
-} = require('../utils/middleware');
+const { isAuth, isAuthor } = require('../utils/middleware');
 const catchAsync = require('../utils/catch-async');
 
-elseRouter.get('/', isAuth, async (req, res) => {
-	const elsewheres = await Elsewhere.find({});
-	res.render('elsewhere/index', { elsewheres });
-});
+// Index route
+elseRouter.get(
+	'/',
+	// isAuth,
+	async (req, res) => {
+		const elsewheres = await Elsewhere.find({});
+		const { currentUser } = req.body;
+		res.render('home', { elsewheres, currentUser });
+	}
+);
 
+// New route
 elseRouter.get(
 	'/new',
 	// isAuth,
 	(req, res) => {
-		res.render('elsewhere/new');
+		const { currentUser } = req.body;
+
+		res.render('elsewhere/new', { currentUser });
 	}
 );
 
@@ -59,12 +62,13 @@ elseRouter.post(
 			}));
 
 			await newElsewhere.save();
-			console.log(newElsewhere);
+
 			res.redirect(`/elsewhere/${newElsewhere.id}`);
 		}
 	}
 );
 
+// Show route
 elseRouter.get('/:id', isAuth, async (req, res) => {
 	const { id } = req.params;
 	const elsewhere = await Elsewhere.findById(id)
@@ -86,6 +90,7 @@ elseRouter.get('/:id/edit', async (req, res) => {
 	res.render('elsewhere/edit', { elsewhere });
 });
 
+// Edit route
 elseRouter.put(
 	'/:id',
 	isAuth,
@@ -109,16 +114,17 @@ elseRouter.put(
 	}
 );
 
+// Destroy route
 elseRouter.delete('/:id', async (req, res) => {
 	const { id } = req.params;
 	await Elsewhere.findByIdAndDelete(id);
 	res.redirect('/elsewhere');
 });
 
+// Rating route
 elseRouter.post(
 	'/:id/rating',
 	isAuth,
-	validateRating,
 	catchAsync(async (req, res) => {
 		const { id } = req.params;
 		const { rating } = req.body;
@@ -131,10 +137,6 @@ elseRouter.post(
 
 		if (rated.patron) elsewhere.rating.push(rated);
 		await elsewhere.save();
-
-		const author = await User.findById(elsewhere.author);
-		author.quin += rating.star / 5;
-		await author.save();
 
 		res.redirect(`/elsewhere/${elsewhere.id}`);
 	})

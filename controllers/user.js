@@ -8,8 +8,10 @@ const catchAsync = require('../utils/catch-async');
 const userRouter = express.Router();
 const User = require('../models/user');
 
+// Sign-up
 userRouter.get('/sign-up', (req, res) => {
-	res.render('user/sign-up');
+	const { currentUser } = req.body;
+	res.render('user/sign-up', { currentUser });
 });
 
 userRouter.post(
@@ -18,9 +20,11 @@ userRouter.post(
 	validateUser,
 	catchAsync(async (req, res) => {
 		const { user } = req.body;
+		const { currentUser } = req.body;
+
 		user.password = bcrypt.hashSync(user.password, bcrypt.genSaltSync(10));
 
-		const newUser = new User({ ...user, quin: 10 });
+		const newUser = new User({ ...user });
 		await newUser.save();
 		req.session.currentUser = newUser._id;
 		newUser.photo = req.files.map(photo => ({
@@ -29,29 +33,36 @@ userRouter.post(
 		}));
 		console.log(newUser);
 		req.flash('message', `Hi ${user.username}`);
-		res.redirect('/');
+		res.render('/', { currentUser });
 	})
 );
 
+// Sign-in
+
 userRouter.get('/sign-in', (req, res) => {
-	res.render('user/sign-in');
+	const { currentUser } = req.body;
+
+	res.render('user/sign-in', { currentUser });
 });
 
 userRouter.post('/sign-in', async (req, res) => {
 	const { username, password } = req.body.user;
+	const { currentUser } = req.body;
+
 	const user = await User.findOne({ username });
 
 	if (!user) {
 		req.flash('error', 'Incorrect username or password');
-		return res.redirect('sign-in');
+		res.render('user/sign-in', { currentUser });
 	} else {
 		if (bcrypt.compareSync(password, user.password)) {
 			req.session.currentUser = user._id;
 			req.flash('message', `Welcome back ${user.username}`);
-			return res.redirect('/elsewhere');
+			res.redirect('/elsewhere');
+			// res.render('home', { currentUser });
 		} else {
 			req.flash('error', 'Incorrect username or password');
-			return res.redirect('sign-in');
+			res.render('user/sign-in', { currentUser });
 		}
 	}
 });

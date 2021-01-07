@@ -6,9 +6,10 @@ const ejsMate = require('ejs-mate');
 const mongoose = require('mongoose');
 const session = require('express-session');
 const flash = require('connect-flash');
-const elseRouter = require('./routes/elsewhere');
-const seedRouter = require('./routes/seeder');
-const userRouter = require('./routes/user');
+const Elsewhere = require('./models/elsewhere');
+const elseRouter = require('./controllers/elsewhere');
+const seedRouter = require('./controllers/seeder');
+const userRouter = require('./controllers/user');
 
 // Config /////////////////////////////////////////////////////////////////////////
 const app = express();
@@ -61,13 +62,23 @@ app.use('/elsewhere', elseRouter);
 app.use('/seeder', seedRouter);
 app.use('/user', userRouter);
 
-// Routes /////////////////////////////////////////////////////////////////////////////////
-app.get('/', (req, res) => {
-	res.render('home');
+// Home route ////////////////////////////////////////////////////////////////////////
+app.get('/', async (req, res) => {
+	const elsewheres = await Elsewhere.find({});
+	const { currentUser } = req.body;
+
+	const elsewhereAtIdxZero = [];
+	for (let elsewhere of elsewheres) {
+		const image = elsewhere.image.map(el => el);
+
+		elsewhereAtIdxZero.push({ image: image[0].url, elsewhere });
+	}
+	res.render('elsewhere/index', { currentUser, elsewhereAtIdxZero });
 });
 
-// app.use((err, req, res, next) => {
-// 	const { statusCode = 500, message = 'Something went wrong!' } = err;
-// 	req.flash('error', message);
-// 	res.status(statusCode).redirect('/');
-// });
+// Catch Async Error //////////////////////////////////////////////////////////////
+app.use((err, req, res, next) => {
+	const { statusCode = 500, message = 'Something went wrong!' } = err;
+	req.flash('error', message);
+	res.status(statusCode).redirect('/');
+});

@@ -37,7 +37,7 @@ const elsewhereSchema = new Schema(
 elsewhereSchema.virtual('properties.popUpMarkup').get(function () {
 	return `
 	<strong><a href="/elsewhere/${this._id}">${this.title}</a><strong>
-	<p>${this.description.substring(0, 30)}...</p>`;
+	<p>${this.description.substring(0, 40)}...</p>`;
 });
 
 // Pre/Post Hook Mongoose Middleware /////////////////////////////
