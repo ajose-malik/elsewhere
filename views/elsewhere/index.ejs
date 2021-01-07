@@ -1,45 +1,50 @@
 <% layout('layout/template')%>
-<div id="map-cluster" style="height: 400px"></div>
+<h1 class="py-5">future <strong>Adventures</strong></h1>
 
-<h1>Adventures</h1>
-
-<% for (let elsewhere of elsewheres){%>
-<div class="card col-md-8" mb-3>
-	<div class="row">
-		<div class="col-md-3">
-			<%if(elsewhere.image.length) {%>
-			<img
-				class="img-fluid img-thumbnail"
-				style="height: 150px; width: 150px"
-				alt="images"
-				src="<%=elsewhere.image[0].url%>"
-			/>
-			<% }else {%>
-			<img
-				class="img-fluid img-thumbnail"
-				style="height: 150px; width: 150px"
-				alt="images"
-				src="https://res.cloudinary.com/majose/image/upload/v1609796598/Elsewhere/adventure_qoi34t.jpg"
-			/>
-			<% } %>
-		</div>
-		<div class="col-md-9">
-			<div class="card-body">
-				<h5 class="card-title"><%= elsewhere.title %></h5>
-				<p class="card-text"><%= elsewhere.description %></p>
-				<p class="card-text">
-					<small class="text-muted"><%= elsewhere.location%></small>
-				</p>
-				<a href="/elsewhere/<%= elsewhere.id %>"><%= elsewhere.title %></a>
+<div
+	id="carouselControl"
+	class="carousel carousel-dark slide"
+	data-ride="carousel"
+>
+	<div class="carousel-inner">
+		<% elsewhereAtIdxZero.forEach((info, index) => { %>
+		<div
+			class="carousel-item <%= index === 0 ? 'active' : ''%>"
+			data-bs-interval="5000"
+		>
+			<a href="/elsewhere/<%= info.elsewhere._id%>">
+				<img
+					src="<%= info.image%>"
+					style="height: 70vh"
+					class="d-block w-100"
+					alt="images"
+				/>
+			</a>
+			<div class="carousel-caption d-none d-md-block">
+				<h2><strong><%= info.elsewhere.title%></strong></h2>
+				<h5><strong><%= info.elsewhere.location%></strong></h5>
 			</div>
 		</div>
+		<% }) %>
 	</div>
+	<% if(elsewhereAtIdxZero.length > 1) {%>
+	<a
+		class="carousel-control-prev"
+		href="#carouselControl"
+		role="button"
+		data-bs-slide="prev"
+	>
+		<span class="carousel-control-prev-icon" aria-hidden="true"></span>
+		<span class="visually-hidden">Prev</span>
+	</a>
+	<a
+		class="carousel-control-next"
+		href="#carouselControl"
+		role="button"
+		data-bs-slide="next"
+	>
+		<span class="carousel-control-next-icon" aria-hidden="true"></span>
+		<span class="visually-hidden">Next</span>
+	</a>
+	<% } %>
 </div>
-<% }%>
-
-<script>
-	const mbxToken = '<%-process.env.MAPBOX_TOKEN%>';
-	const elsewheres = {features: <%-JSON.stringify(elsewheres)%>}
-</script>
-
-<script src="/javascript/map-cluster.js"></script>

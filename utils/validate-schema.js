@@ -4,7 +4,6 @@ module.exports.elseValidator = Joi.object({
 	elsewhere: Joi.object({
 		title: Joi.string().required(),
 		description: Joi.string().required(),
-		quin: Joi.number().required().min(0),
 		location: Joi.string().required(),
 		geometry: Joi.object({
 			type: Joi.required(),
