@@ -13,17 +13,16 @@ seedRouter.get(`/${SEEDER}`, async (req, res) => {
 		'https://source.unsplash.com/collection/1023843'
 	];
 
-	for (let i = 0; i < 2; i++) {
+	for (let i = 0; i < 100; i++) {
 		const randGen = Math.floor(Math.random() * cities.length);
 		const randUrl = Math.floor(Math.random() * imageUrl.length);
 		const url = imageUrl[randUrl];
 
 		const elsewhere = new Elsewhere({
-			author: '5ff539cf7cfefe0017738e41',
+			author: '5ff727c6d135dc3ca7c3bbbb',
 			location: `${cities[randGen].city}, ${cities[randGen].state}`,
 			title: faker.lorem.word(),
 			description: faker.lorem.paragraph(),
-			quin: Math.floor(Math.random() * 10) + 1,
 			image: [
 				{
 					url,

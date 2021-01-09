@@ -23,15 +23,19 @@ elseRouter.get(
 );
 
 // New route
-elseRouter.get('/new', isAuth, (req, res) => {
-	const { currentUser } = req.body;
-	res.render('elsewhere/new', { currentUser });
-});
+elseRouter.get(
+	'/new',
+	// isAuth,
+	(req, res) => {
+		const { currentUser } = req.body;
+		res.render('elsewhere/new', { currentUser });
+	}
+);
 
 elseRouter.post(
 	'/',
 	upload.array('image'),
-	isAuth,
+	// isAuth,
 	catchAsync(async (req, res) => {
 		const { elsewhere } = req.body;
 		const mapData = await mapper
@@ -64,7 +68,7 @@ elseRouter.post(
 // Show route
 elseRouter.get(
 	'/:id',
-	isAuth,
+	// isAuth,
 	catchAsync(async (req, res) => {
 		const { id } = req.params;
 		const elsewhere = await Elsewhere.findById(id)
@@ -93,8 +97,8 @@ elseRouter.get(
 // Edit route
 elseRouter.get(
 	'/:id/edit',
-	isAuth,
-	isAuthor,
+	// isAuth,
+	// isAuthor,
 	catchAsync(async (req, res) => {
 		const { id } = req.params;
 		const elsewhere = await Elsewhere.findById(id);
@@ -105,8 +109,8 @@ elseRouter.get(
 elseRouter.put(
 	'/:id',
 	upload.array('image'),
-	isAuth,
-	isAuthor,
+	// isAuth,
+	// isAuthor,
 	async (req, res) => {
 		const { id } = req.params;
 		const elsewhere = await Elsewhere.findByIdAndUpdate(id, {
@@ -129,8 +133,8 @@ elseRouter.put(
 // Destroy route
 elseRouter.delete(
 	'/:id',
-	isAuth,
-	isAuthor,
+	// isAuth,
+	// isAuthor,
 	catchAsync(async (req, res) => {
 		const { id } = req.params;
 		await Elsewhere.findByIdAndDelete(id);

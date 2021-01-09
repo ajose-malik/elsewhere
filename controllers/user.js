@@ -16,7 +16,7 @@ userRouter.get('/sign-up', (req, res) => {
 
 userRouter.post(
 	'/sign-up',
-	validateUser,
+	// validateUser,
 	catchAsync(async (req, res) => {
 		const { user } = req.body;
 		const { currentUser } = req.body;

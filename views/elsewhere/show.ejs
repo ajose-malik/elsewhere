@@ -1,16 +1,14 @@
 <% layout('layout/template')%>
 <div class="py-4">
-	<h1 class="d-inline">
-		<strong><%= elsewhere.title %></strong>
-	</h1>
-	<h5 class="d-inline">
+	<h1 class="d-inline text-mid-dark"><%= elsewhere.title %></h1>
+	<h5 class="d-inline text-mid-dark">
 		<strong>by <%=author.username%></strong>
 	</h5>
 </div>
 
 <link rel="stylesheet" href="/stylesheet/rating.css" />
 
-<div class="col-md-12 row mb-3">
+<div class="col-md-12 row mb-3 my-2">
 	<div class="col-md-8 row">
 		<div
 			id="carouselControl"
@@ -82,7 +80,7 @@
 		username) || !elsewhere.rating.length) {%>
 		<div class="card shadow mb-3">
 			<div class="card-body">
-				<h5><strong>Rate this adventure</strong></h5>
+				<h5 class="text-mid"><strong>Rate this adventure</strong></h5>
 				<form
 					action="/elsewhere/<%=elsewhere.id%>/rating"
 					method="POST"
@@ -162,9 +160,11 @@
 		<div class="card mb-3">
 			<div class="card-body">
 				<h5 class="card-title">
-					<p><strong class="text-muted"><%=rating.patron%></strong></p>
+					<p><strong class="text-muted text-mid"><%=rating.patron%></strong></p>
 					<p class="starability-result" data-rating="<%=rating.star%>"></p>
-					<span class="card-text text-muted"><%= rating.comment %></span>
+					<span class="card-text text-muted text-mid"
+						><%= rating.comment %></span
+					>
 				</h5>
 			</div>
 		</div>

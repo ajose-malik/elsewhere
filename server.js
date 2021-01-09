@@ -10,6 +10,7 @@ const Elsewhere = require('./models/elsewhere');
 const elseRouter = require('./controllers/elsewhere');
 const seedRouter = require('./controllers/seeder');
 const userRouter = require('./controllers/user');
+const elsewhere = require('./models/elsewhere');
 
 // Config /////////////////////////////////////////////////////////////////////////
 const app = express();
@@ -66,19 +67,34 @@ app.use('/user', userRouter);
 app.get('/', async (req, res) => {
 	const elsewheres = await Elsewhere.find({});
 	const { currentUser } = req.body;
-
+	const rand = value => {
+		return value[Math.floor(Math.random() * elsewheres.length)];
+	};
+	const randElsewhere1 = rand(elsewheres);
+	const randElsewhere2 = rand(elsewheres);
+	const randElsewhere3 = rand(elsewheres);
 	const elsewhereAtIdxZero = [];
 	for (let elsewhere of elsewheres) {
 		const image = elsewhere.image.map(el => el);
-
 		elsewhereAtIdxZero.push({ image: image[0].url, elsewhere });
 	}
-	res.render('elsewhere/index', { currentUser, elsewhereAtIdxZero });
+
+	res.render('elsewhere/index', {
+		currentUser,
+		elsewhereAtIdxZero,
+		randElsewhere1,
+		randElsewhere2,
+		randElsewhere3
+	});
 });
 
 // Catch Async Error //////////////////////////////////////////////////////////////
 app.use((err, req, res, next) => {
-	const { statusCode = 500, message = 'Something went wrong!' } = err;
-	req.flash('error', message);
-	res.status(statusCode).redirect('/');
+	if (err.message.includes('elsewheres is not defined')) {
+		res.redirect('/');
+	} else {
+		const { statusCode = 500, message = 'Something went wrong!' } = err;
+		req.flash('error', message);
+		res.status(statusCode).redirect('/');
+	}
 });
