@@ -9,21 +9,23 @@
 <link rel="stylesheet" href="/stylesheet/rating.css" />
 
 <div class="col-md-12 row mb-3 my-2">
-	<div class="col-md-8 row">
+	<div class="col-md-8">
 		<div
 			id="carouselControl"
-			class="carousel carousel-dark slide"
+			class="carousel carousel-dark slide mb-4"
 			data-ride="carousel"
+			style="height: 40vh"
 		>
-			<div class="carousel-inner">
+			<div class="carousel-inner" style="height: 40vh">
 				<% elsewhere.image.forEach((image, index) => { %>
 				<div
 					class="carousel-item <%= index === 0 ? 'active' : ''%>"
+					style="height: 40vh"
 					data-bs-interval="5000"
 				>
 					<img
 						src="<%= image.url%>"
-						style="height: 50vh"
+						style="height: 40vh"
 						class="d-block w-100"
 						alt="images"
 					/>
@@ -51,34 +53,12 @@
 			</a>
 			<% } %>
 		</div>
-		<div class="mb-5 mt-4">
-			<h5 class="mb-3"><%= elsewhere.description%></h5>
-			<!-- Delete & Edit -->
-
-			<a
-				class="card-link btn btn-secondary"
-				href="/elsewhere/<%=elsewhere._id%>/edit"
-				>Edit</a
-			>
-			<form
-				class="d-inline"
-				action="/elsewhere/<%=elsewhere.id%>?_method=DELETE"
-				method="POST"
-			>
-				<button class="btn btn-danger">Delete</button>
-			</form>
-		</div>
-	</div>
-
-	<!-- Map box -->
-	<div class="col-md-4">
-		<div id="map" style="height: 30vh" class="mb-4"></div>
 
 		<!-- Ratings -->
 		<% if(currentUser && elsewhere.author[0]._id !== currentUser && username !==
 		author.username && elsewhere.rating.every(rating => rating.patron !==
 		username) || !elsewhere.rating.length) {%>
-		<div class="card shadow mb-3">
+		<div class="card shadow-lg mb-4">
 			<div class="card-body">
 				<h5 class="text-mid"><strong>Rate this adventure</strong></h5>
 				<form
@@ -136,7 +116,7 @@
 						<label for="first-rate5" title="Oof">5 stars</label>
 					</fieldset>
 
-					<div class="mb-3">
+					<div class="mb-4">
 						<label class="form-label" for="comment"
 							><strong>Comment</strong></label
 						>
@@ -155,26 +135,73 @@
 			</div>
 		</div>
 		<% } %>
+
 		<!-- Submitted ratings -->
-		<% for(let rating of elsewhere.rating) { %>
-		<div class="card mb-3">
-			<div class="card-body">
-				<h5 class="card-title">
-					<p><strong class="text-muted text-mid"><%=rating.patron%></strong></p>
-					<p class="starability-result" data-rating="<%=rating.star%>"></p>
-					<span class="card-text text-muted text-mid"
-						><%= rating.comment %></span
+		<div class="accordion accordion-flush mb-4">
+		<% elsewhere.rating.forEach((rating, index) => { %>
+			<div class="accordion-item bg-light" id="accordion<%=index%>"
+				<h2 class="accordion-header" id="flush-headingOne">
+					<button
+						class="accordion-button collapsed bg-light"
+						type="button"
+						data-bs-toggle="collapse"
+						data-bs-target="#collapse<%=index%>"
+						aria-expanded="false"
+						aria-controls="flush-collapseOne"
 					>
-				</h5>
+						<p
+							class="starability-result me-3"
+							data-rating="<%=rating.star%>"
+						></p>
+						<h5 class='text-mid'>Review by <strong><%=rating.patron%></strong></h5>
+					</button>
+				</h2>
+				<div
+					id="collapse<%=index%>"
+					class="accordion-collapse collapse"
+					aria-labelledby="flush-headingOne"
+					data-bs-parent="#accordion<%=index%>"
+				>
+					<div class="accordion-body">
+						<strong class="text-mid"><%= rating.comment %></strong>
+					</div>
+				</div>
 			</div>
+			<% }) %>
 		</div>
-		<% } %>
+	</div>
+
+	<!-- Map box -->
+	<div class="col-md-4">
+		<div id="map" style="height: 40vh" class="mb-4"></div>
+
+		<!-- Description -->
+		<div class='bg-light'>
+			<h5 class="mb-4 text-margin"><%= elsewhere.description%></h5>
+		</div>
+		<!-- Delete & Edit -->
+
+		<div class="mb-5">
+			<a
+				class="card-link btn btn-secondary mb-5 me-3"
+				href="/elsewhere/<%=elsewhere._id%>/edit"
+				>Edit</a
+			>
+			<form
+				class="d-inline"
+				action="/elsewhere/<%=elsewhere.id%>?_method=DELETE"
+				method="POST"
+			>
+				<button class="btn btn-danger mb-5">Delete</button>
+			</form>
+		</div>
 	</div>
 </div>
 
-<script>
-	const mbxToken = '<%-process.env.MAPBOX_TOKEN%>';
-	const elsewhere = <%-JSON.stringify(elsewhere)%>
-</script>
 
-<script src="/javascript/map-box.js"></script>
+	<script>
+		const mbxToken = '<%-process.env.MAPBOX_TOKEN%>';
+		const elsewhere = <%-JSON.stringify(elsewhere)%>
+	</script>
+
+	<script src="/javascript/map-box.js"></script>

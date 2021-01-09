@@ -27,8 +27,8 @@
 					/>
 				</div>
 				<div
-					class="col-md-4 row d-block w-95 overflow-auto mobile-hide default text-margin"
-					style="height: 40vh; background-color: #e9e9e960"
+					class="col-md-4 row d-block w-95 overflow-auto mobile-hide default text-margin bg-dark"
+					style="height: 40vh"
 				>
 					<h3 class="text-mid mobile-hide">
 						<strong><%= info.elsewhere.title%></strong>
@@ -70,54 +70,54 @@
 <div class="row">
 	<div class="col-md-4 mt-4 pe-1">
 		<a href="/elsewhere/<%= randElsewhere1._id%>" class="text-decoration-none">
-			<div class="card">
-				<div class="card-body">
+			<div class="card card-border shadow-lg">
+				<div class="card-body card-border p-0 bg-dark">
 					<img
 						src="<%= randElsewhere1.image[0].url%>"
 						style="height: 20vh"
-						class="d-block w-100 card-img-top default mobile-height"
+						class="w-100 card-img-top default mobile-height"
 						alt="image"
 					/>
-					<h5 class="card-text text-mid mt-3 mb-0">
+					<h5 class="card-text mt-3 mb-0 ps-3">
 						<strong><%= randElsewhere1.title%></strong>
 					</h5>
-					<p class="card-text text-mid"><%= randElsewhere1.location%></p>
+					<p class="card-text ps-3 pb-3"><%= randElsewhere1.location%></p>
 				</div>
 			</div>
 		</a>
 	</div>
 	<div class="col-md-4 mt-4 pe-1">
 		<a href="/elsewhere/<%= randElsewhere2._id%>" class="text-decoration-none">
-			<div class="card">
-				<div class="card-body">
+			<div class="card card-border shadow-lg">
+				<div class="card-body card-border p-0 bg-dark">
 					<img
 						src="<%= randElsewhere2.image[0].url%>"
 						style="height: 20vh"
-						class="d-block w-100 card-img-top default mobile-height"
+						class="w-100 card-img-top default mobile-height"
 						alt="image"
 					/>
-					<h5 class="card-text text-mid mt-3 mb-0">
+					<h5 class="card-text mt-3 mb-0 ps-3">
 						<strong><%= randElsewhere2.title%></strong>
 					</h5>
-					<p class="card-text text-mid"><%= randElsewhere2.location%></p>
+					<p class="card-text ps-3 pb-3"><%= randElsewhere2.location%></p>
 				</div>
 			</div>
 		</a>
 	</div>
-	<div class="col-md-4 mt-4 mb-5">
+	<div class="col-md-4 mt-4">
 		<a href="/elsewhere/<%= randElsewhere3._id%>" class="text-decoration-none">
-			<div class="card">
-				<div class="card-body">
+			<div class="card card-border shadow-lg">
+				<div class="card-body card-border p-0 bg-dark">
 					<img
 						src="<%= randElsewhere3.image[0].url%>"
 						style="height: 20vh"
-						class="d-block w-100 card-img-top default mobile-height"
+						class="w-100 card-img-top default mobile-height"
 						alt="image"
 					/>
-					<h5 class="card-text text-mid mt-3 mb-0">
+					<h5 class="card-text mt-3 mb-0 ps-3">
 						<strong><%= randElsewhere3.title%></strong>
 					</h5>
-					<p class="card-text text-mid"><%= randElsewhere3.location%></p>
+					<p class="card-text ps-3 pb-3"><%= randElsewhere3.location%></p>
 				</div>
 			</div>
 		</a>
