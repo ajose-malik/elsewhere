@@ -65,36 +65,60 @@ app.use('/user', userRouter);
 
 // Home route ////////////////////////////////////////////////////////////////////////
 app.get('/', async (req, res) => {
-	const elsewheres = await Elsewhere.find({});
+	const elsewheres = await Elsewhere.find({})
+		.populate('rating')
+		.populate('author');
 	const { currentUser } = req.body;
 	const rand = value => {
 		return value[Math.floor(Math.random() * elsewheres.length)];
 	};
-	const randElsewhere1 = rand(elsewheres);
-	const randElsewhere2 = rand(elsewheres);
-	const randElsewhere3 = rand(elsewheres);
+
 	const elsewhereAtIdxZero = [];
 	for (let elsewhere of elsewheres) {
 		const image = elsewhere.image.map(el => el);
 		elsewhereAtIdxZero.push({ image: image[0].url, elsewhere });
 	}
 
+	const rand1Ratings = [];
+	const rand2Ratings = [];
+	const rand3Ratings = [];
+	const randElsewhere1 = rand(elsewheres);
+	const randElsewhere2 = rand(elsewheres);
+	const randElsewhere3 = rand(elsewheres);
+
+	const randElsewhereRatings = (elseObject, ratingsArray) => {
+		let ratingsTotal = 0;
+		let numRatings = 0;
+		elseObject.rating.forEach(rating => {
+			ratingsTotal += rating.star;
+			numRatings += 1;
+		});
+		ratingsArray.push({ ratingsTotal, numRatings });
+	};
+
+	randElsewhereRatings(randElsewhere1, rand1Ratings);
+	randElsewhereRatings(randElsewhere2, rand2Ratings);
+	randElsewhereRatings(randElsewhere3, rand3Ratings);
+
 	res.render('elsewhere/index', {
 		currentUser,
 		elsewhereAtIdxZero,
 		randElsewhere1,
 		randElsewhere2,
-		randElsewhere3
+		randElsewhere3,
+		rand1Ratings,
+		rand2Ratings,
+		rand3Ratings
 	});
 });
 
 // Catch Async Error //////////////////////////////////////////////////////////////
-app.use((err, req, res, next) => {
-	if (err.message.includes('elsewheres is not defined')) {
-		res.redirect('/');
-	} else {
-		const { statusCode = 500, message = 'Something went wrong!' } = err;
-		req.flash('error', message);
-		res.status(statusCode).redirect('/');
-	}
-});
+// app.use((err, req, res, next) => {
+// 	if (err.message.includes('elsewheres is not defined')) {
+// 		res.redirect('/');
+// 	} else {
+// 		const { statusCode = 500, message = 'Something went wrong!' } = err;
+// 		req.flash('error', message);
+// 		res.status(statusCode).redirect('/');
+// 	}
+// });

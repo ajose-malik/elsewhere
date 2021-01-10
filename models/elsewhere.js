@@ -35,8 +35,12 @@ const elsewhereSchema = new Schema(
 // Mongoose Virtual /////////////////////////////
 elsewhereSchema.virtual('properties.popUpMarkup').get(function () {
 	return `
-	<strong><a href="/elsewhere/${this._id}">${this.title}</a><strong>
-	<p>${this.description.substring(0, 40)}...</p>`;
+	<h4>
+		<strong><a href="/elsewhere/${
+			this._id
+		}" class="text-decoration-none">${this.title}</a><strong>
+	</h4>
+	<h5 class="text-muted">${this.description.substring(0, 100)}...</h5>`;
 });
 
 // Pre/Post Hook Mongoose Middleware /////////////////////////////

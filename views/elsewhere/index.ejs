@@ -30,7 +30,7 @@
 					class="col-md-4 row d-block w-95 overflow-auto mobile-hide default text-margin bg-dark"
 					style="height: 40vh"
 				>
-					<h3 class="text-mid mobile-hide">
+					<h3 class="text-mid mobile-hide mt-4">
 						<strong><%= info.elsewhere.title%></strong>
 					</h3>
 					<h5 class="text-mid mobile-hide">
@@ -78,10 +78,25 @@
 						class="w-100 card-img-top default mobile-height"
 						alt="image"
 					/>
-					<h5 class="card-text mt-3 mb-0 ps-3">
-						<strong><%= randElsewhere1.title%></strong>
-					</h5>
-					<p class="card-text ps-3 pb-3"><%= randElsewhere1.location%></p>
+					<div class="d-flex justify-content-between">
+						<h5 class="text-mid mt-3 mb-0 ps-3">
+							<strong><%= randElsewhere1.title%></strong>
+						</h5>
+
+						<h5 class="text-mid mt-3 mb-0 pe-3">
+							<i class="far fa-star"></i>
+							<%if
+							(isNaN(rand1Ratings[0].ratingsTotal/rand1Ratings[0].numRatings))
+							{%>
+							<strong>0</strong>(0) <%} else {%>
+							<%=rand1Ratings[0].ratingsTotal/rand1Ratings[0].numRatings%>
+							<strong>(rand1Ratings[0].numRatings)</strong>
+							<%}%>
+						</h5>
+					</div>
+					<p class="text-mid ps-3 pb-3">
+						<strong><%= randElsewhere1.location%></strong>
+					</p>
 				</div>
 			</div>
 		</a>
@@ -96,17 +111,32 @@
 						class="w-100 card-img-top default mobile-height"
 						alt="image"
 					/>
-					<h5 class="card-text mt-3 mb-0 ps-3">
-						<strong><%= randElsewhere2.title%></strong>
-					</h5>
-					<p class="card-text ps-3 pb-3"><%= randElsewhere2.location%></p>
+					<div class="d-flex justify-content-between">
+						<h5 class="text-mid mt-3 mb-0 ps-3">
+							<strong><%= randElsewhere2.title%></strong>
+						</h5>
+
+						<h5 class="text-mid mt-3 mb-0 pe-3">
+							<i class="far fa-star"></i>
+							<%if
+							(isNaN(rand2Ratings[0].ratingsTotal/rand2Ratings[0].numRatings))
+							{%>
+							<strong>0</strong>(0) <%} else {%>
+							<%=rand2Ratings[0].ratingsTotal/rand2Ratings[0].numRatings%>
+							<strong>(rand2Ratings[0].numRatings)</strong>
+							<%}%>
+						</h5>
+					</div>
+					<p class="text-mid ps-3 pb-3">
+						<strong><%= randElsewhere2.location%></strong>
+					</p>
 				</div>
 			</div>
 		</a>
 	</div>
-	<div class="col-md-4 mt-4">
+	<div class="col-md-4 mt-4 mb-5">
 		<a href="/elsewhere/<%= randElsewhere3._id%>" class="text-decoration-none">
-			<div class="card card-border shadow-lg">
+			<div class="card card-border shadow-lg mb-5">
 				<div class="card-body card-border p-0 bg-dark">
 					<img
 						src="<%= randElsewhere3.image[0].url%>"
@@ -114,10 +144,25 @@
 						class="w-100 card-img-top default mobile-height"
 						alt="image"
 					/>
-					<h5 class="card-text mt-3 mb-0 ps-3">
-						<strong><%= randElsewhere3.title%></strong>
-					</h5>
-					<p class="card-text ps-3 pb-3"><%= randElsewhere3.location%></p>
+					<div class="d-flex justify-content-between">
+						<h5 class="text-mid mt-3 mb-0 ps-3">
+							<strong><%= randElsewhere3.title%></strong>
+						</h5>
+
+						<h5 class="text-mid mt-3 mb-0 pe-3">
+							<i class="far fa-star"></i>
+							<%if
+							(isNaN(rand3Ratings[0].ratingsTotal/rand3Ratings[0].numRatings))
+							{%>
+							<strong>0</strong>(0) <%} else {%>
+							<%=rand3Ratings[0].ratingsTotal/rand3Ratings[0].numRatings%>
+							<strong>(rand3Ratings[0].numRatings)</strong>
+							<%}%>
+						</h5>
+					</div>
+					<p class="text-mid ps-3 pb-3">
+						<strong><%= randElsewhere3.location%></strong>
+					</p>
 				</div>
 			</div>
 		</a>

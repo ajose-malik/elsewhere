@@ -80,8 +80,10 @@ elseRouter.get(
 
 		const { currentUser } = req.session;
 		const currentUserInfo = await User.findById(currentUser);
+
 		if (currentUserInfo) {
 			const { username } = currentUserInfo;
+
 			return res.render('elsewhere/show', {
 				elsewhere,
 				currentUser,
@@ -158,7 +160,7 @@ elseRouter.post(
 		if (rated.patron) elsewhere.rating.push(rated);
 		await elsewhere.save();
 
-		res.redirect(`/elsewhere/${elsewhere.id}`);
+		res.render(`/elsewhere/${elsewhere.id}`);
 	})
 );
 
