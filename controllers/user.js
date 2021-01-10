@@ -19,12 +19,12 @@ userRouter.post(
 	// validateUser,
 	catchAsync(async (req, res) => {
 		const { user } = req.body;
-		const { currentUser } = req.body;
 
 		user.password = bcrypt.hashSync(user.password, bcrypt.genSaltSync(10));
 
 		const newUser = new User({ ...user });
 		await newUser.save();
+		let currentUser = req.session.currentUser;
 		req.session.currentUser = newUser._id;
 		req.flash('message', `Hi ${user.username}`);
 		res.render('home', { currentUser });
@@ -33,8 +33,7 @@ userRouter.post(
 
 // Sign-in
 userRouter.get('/sign-in', (req, res) => {
-	const { currentUser } = req.body;
-
+	let currentUser = req.session.currentUser;
 	res.render('user/sign-in', { currentUser });
 });
 
@@ -42,7 +41,7 @@ userRouter.post(
 	'/sign-in',
 	catchAsync(async (req, res) => {
 		const { username, password } = req.body.user;
-		const { currentUser } = req.body;
+		let currentUser = req.session.currentUser;
 
 		const user = await User.findOne({ username });
 
@@ -53,7 +52,6 @@ userRouter.post(
 			if (bcrypt.compareSync(password, user.password)) {
 				req.session.currentUser = user._id;
 				req.flash('message', `Welcome back ${user.username}`);
-				// res.redirect('/elsewhere');
 				res.render('home', { currentUser });
 			} else {
 				req.flash('error', 'Incorrect username or password');

@@ -17,7 +17,7 @@ elseRouter.get(
 	'/',
 	catchAsync(async (req, res) => {
 		const elsewheres = await Elsewhere.find({});
-		const { currentUser } = req.body;
+		let currentUser = req.session.currentUser;
 		res.render('home', { elsewheres, currentUser });
 	})
 );
@@ -27,7 +27,7 @@ elseRouter.get(
 	'/new',
 	// isAuth,
 	(req, res) => {
-		const { currentUser } = req.body;
+		let currentUser = req.session.currentUser;
 		res.render('elsewhere/new', { currentUser });
 	}
 );
@@ -37,7 +37,7 @@ elseRouter.post(
 	upload.array('image'),
 	// isAuth,
 	catchAsync(async (req, res) => {
-		const { elsewhere } = req.body;
+		let currentUser = req.session.currentUser;
 		const mapData = await mapper
 			.forwardGeocode({
 				query: elsewhere.location,
@@ -60,7 +60,7 @@ elseRouter.post(
 
 			await newElsewhere.save();
 
-			res.redirect(`/elsewhere/${newElsewhere.id}`);
+			res.render(`/elsewhere/${newElsewhere.id}`, { currentUser });
 		}
 	})
 );
@@ -78,7 +78,7 @@ elseRouter.get(
 		const authorId = elsewhere.author[0]._id;
 		const author = await User.findById(authorId);
 
-		const { currentUser } = req.session;
+		let currentUser = req.session.currentUser;
 		const currentUserInfo = await User.findById(currentUser);
 
 		if (currentUserInfo) {
@@ -102,9 +102,10 @@ elseRouter.get(
 	// isAuth,
 	// isAuthor,
 	catchAsync(async (req, res) => {
+		let currentUser = req.session.currentUser;
 		const { id } = req.params;
 		const elsewhere = await Elsewhere.findById(id);
-		res.render('elsewhere/edit', { elsewhere });
+		res.render('elsewhere/edit', { elsewhere, currentUser });
 	})
 );
 
@@ -153,14 +154,14 @@ elseRouter.post(
 		const elsewhere = await Elsewhere.findById(id);
 		const rated = new Rating(rating);
 
-		const currentUser = await User.findById(req.session.currentUser);
+		let currentUser = await User.findById(req.session.currentUser);
 		rated.patron = currentUser.username;
 		await rated.save();
 
 		if (rated.patron) elsewhere.rating.push(rated);
 		await elsewhere.save();
 
-		res.render(`/elsewhere/${elsewhere.id}`);
+		res.redirect(`/elsewhere/${elsewhere.id}`);
 	})
 );
 

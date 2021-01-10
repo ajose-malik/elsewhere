@@ -23,6 +23,8 @@
 				<li>
 					<a class="nav-link" href="/elsewhere/new">Curate</a>
 				</li>
+				<%if(!currentUser) {%>
+
 				<li>
 					<form action="/user/sign-in">
 						<button class="btn btn-outline-secondary ms-3" type="submit">
@@ -30,6 +32,8 @@
 						</button>
 					</form>
 				</li>
+				<%} else {%>
+
 				<li class="b-bot">
 					<form action="/user/sign-out?_method=DELETE" method="POST">
 						<button class="btn btn-outline-secondary ms-3" type="submit">
@@ -37,6 +41,7 @@
 						</button>
 					</form>
 				</li>
+				<%}%>
 			</ul>
 		</div>
 	</div>
