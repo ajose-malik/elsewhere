@@ -15,29 +15,32 @@
 		<div class="collapse navbar-collapse" id="navbarNavDropdown">
 			<ul class="navbar-nav">
 				<li>
-					<a class="nav-link" href="/">Adventures</a>
+					<a class="nav-link" href="/">Adventure</a>
 				</li>
 				<li>
 					<a class="nav-link" href="/elsewhere">Explore</a>
 				</li>
+				<%if(currentUser) {%>
 				<li>
 					<a class="nav-link" href="/elsewhere/new">Curate</a>
 				</li>
-				<%if(!currentUser) {%>
+				<li>
+					<a class="nav-link" href="/elsewhere/collection">Collection</a>
+				</li>
+				<li>
+					<form action="/user/sign-out?_method=DELETE" method="POST">
+						<button class="btn btn-outline-secondary ms-3" type="submit">
+							Sign Out
+						</button>
+					</form>
+				</li>
+
+				<%} else {%>
 
 				<li>
 					<form action="/user/sign-in">
 						<button class="btn btn-outline-secondary ms-3" type="submit">
 							Sign In
-						</button>
-					</form>
-				</li>
-				<%} else {%>
-
-				<li class="b-bot">
-					<form action="/user/sign-out?_method=DELETE" method="POST">
-						<button class="btn btn-outline-secondary ms-3" type="submit">
-							Sign Out
 						</button>
 					</form>
 				</li>

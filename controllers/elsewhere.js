@@ -37,7 +37,7 @@ elseRouter.post(
 	upload.array('image'),
 	// isAuth,
 	catchAsync(async (req, res) => {
-		let currentUser = req.session.currentUser;
+		const { elsewhere } = req.body;
 		const mapData = await mapper
 			.forwardGeocode({
 				query: elsewhere.location,
@@ -47,6 +47,9 @@ elseRouter.post(
 
 		if (mapData.body.features[0] === undefined) {
 			req.flash('error', 'Location does not exist');
+			return res.redirect('/elsewhere/new');
+		} else if (req.files.length > 5) {
+			req.flash('error', 'Number of files must not exceed 5');
 			return res.redirect('/elsewhere/new');
 		} else {
 			const newElsewhere = new Elsewhere(elsewhere);
@@ -59,9 +62,51 @@ elseRouter.post(
 			}));
 
 			await newElsewhere.save();
-
-			res.render(`/elsewhere/${newElsewhere.id}`, { currentUser });
+			console.log(newElsewhere);
+			res.redirect(`/elsewhere/${newElsewhere.id}`);
 		}
+	})
+);
+
+// Collection route
+elseRouter.get(
+	'/collection',
+	// isAuth,
+	catchAsync(async (req, res) => {
+		// const { id } = req.params;
+		// const elsewhere = await Elsewhere.findById(id)
+		// 	.populate('rating')
+		// 	.populate('author');
+
+		// const authorId = elsewhere.author[0]._id;
+		// const author = await User.findById(authorId);
+
+		///////////////////////////////////////////////////////////////////////
+		let currentUser = req.session.currentUser;
+		const currentUserInfo = await User.findById(currentUser);
+
+		const elsewheres = await Elsewhere.find({});
+		const collectionBox = [];
+		const userElsewheres = elsewheres.map(elsewhere => {
+			if (elsewhere.author === currentUser) {
+				collectionBox.push(elsewhere);
+			}
+			console.log(elsewhere.rating);
+		});
+
+		console.log(collectionBox);
+		// if (currentUserInfo) {
+		// 	const { username } = currentUserInfo;
+
+		// 	return res.render('elsewhere/collection', {
+		// 		elsewhere,
+		// 		currentUser,
+		// 		username,
+		// 		author
+		// 	});
+		// } else {
+		// 	return res.redirect('/user/sign-in');
+		// }
 	})
 );
 
@@ -114,23 +159,28 @@ elseRouter.put(
 	upload.array('image'),
 	// isAuth,
 	// isAuthor,
-	async (req, res) => {
+	catchAsync(async (req, res) => {
 		const { id } = req.params;
 		const elsewhere = await Elsewhere.findByIdAndUpdate(id, {
 			...req.body.elsewhere
 		});
 
-		const image = req.files.map(image => ({
-			url: image.path,
-			filename: image.filename
-		}));
+		if (req.files.length > 5) {
+			req.flash('error', 'Number of files must not exceed 5');
+			return res.redirect('/elsewhere/new');
+		} else {
+			const image = req.files.map(image => ({
+				url: image.path,
+				filename: image.filename
+			}));
+			elsewhere.image.push(...image);
+		}
 
-		elsewhere.image.push(...image);
 		await elsewhere.save();
 
 		req.flash('message', 'Updated adventure');
 		res.redirect(`/elsewhere/${elsewhere.id}`);
-	}
+	})
 );
 
 // Destroy route

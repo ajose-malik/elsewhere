@@ -26,7 +26,7 @@ userRouter.post(
 		await newUser.save();
 		let currentUser = req.session.currentUser;
 		req.session.currentUser = newUser._id;
-		req.flash('message', `Hi ${user.username}`);
+		req.flash('message', `Hi ${user.username}!`);
 		res.render('home', { currentUser });
 	})
 );
@@ -51,7 +51,7 @@ userRouter.post(
 		} else {
 			if (bcrypt.compareSync(password, user.password)) {
 				req.session.currentUser = user._id;
-				req.flash('message', `Welcome back ${user.username}`);
+				req.flash('message', `Welcome back ${user.username}!`);
 				res.render('home', { currentUser });
 			} else {
 				req.flash('error', 'Incorrect username or password');

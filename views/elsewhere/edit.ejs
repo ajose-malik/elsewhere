@@ -7,7 +7,7 @@
 			</h1>
 		</div>
 	
-	<div class="card shadow px-0">
+	<div class="card shadow px-0 mb-5">
 	<div class='card-body' style="background-color: #e9e9e960">
 		<form
 		action="/elsewhere"
@@ -58,8 +58,13 @@
 				Looks good!
 		</div>
 		</div>
-		<div class='mb-4'><button class="btn btn-success" id='imageSubmit'>Update Adventure</button></div>
+		<div class='mb-4'><button class="btn btn-success d-inline" id='imageSubmit'>Update Adventure</button>
 		</form>
-
+		<a
+				class="card-link ms-3 btn border border-secondary rounded-3 border-2" style="background-color: #e9e9e960"
+				href="/elsewhere/<%=elsewhere._id%>"
+				>Back</a
+			>
+		</div>
 	</div>
 </div>
