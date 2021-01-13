@@ -73,40 +73,24 @@ elseRouter.get(
 	'/collection',
 	// isAuth,
 	catchAsync(async (req, res) => {
-		// const { id } = req.params;
-		// const elsewhere = await Elsewhere.findById(id)
-		// 	.populate('rating')
-		// 	.populate('author');
-
-		// const authorId = elsewhere.author[0]._id;
-		// const author = await User.findById(authorId);
-
-		///////////////////////////////////////////////////////////////////////
-		let currentUser = req.session.currentUser;
+		let { currentUser } = req.session;
 		const currentUserInfo = await User.findById(currentUser);
-
 		const elsewheres = await Elsewhere.find({});
-		const collectionBox = [];
+
 		const userElsewheres = elsewheres.map(elsewhere => {
-			if (elsewhere.author === currentUser) {
-				collectionBox.push(elsewhere);
+			if (elsewhere.author.includes(currentUser)) {
+				return elsewhere;
 			}
-			console.log(elsewhere.rating);
 		});
 
-		console.log(collectionBox);
-		// if (currentUserInfo) {
-		// 	const { username } = currentUserInfo;
-
-		// 	return res.render('elsewhere/collection', {
-		// 		elsewhere,
-		// 		currentUser,
-		// 		username,
-		// 		author
-		// 	});
-		// } else {
-		// 	return res.redirect('/user/sign-in');
-		// }
+		if (currentUser) {
+			return res.render('elsewhere/collection', {
+				userElsewheres,
+				currentUser
+			});
+		} else {
+			return res.redirect('/user/sign-in');
+		}
 	})
 );
 

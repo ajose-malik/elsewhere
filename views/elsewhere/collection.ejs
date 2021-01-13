@@ -177,7 +177,7 @@
 
 		<!-- Description -->
 		<div class='bg-light'>
-			<h5 class="mb-4 text-margin"><%= elsewhere.description%></h5>
+			<h5 class="mb-4 text-margin py-4"><%= elsewhere.description%></h5>
 		</div>
 		<!-- Delete & Edit -->
 
@@ -198,10 +198,3 @@
 	</div>
 </div>
 
-
-	<script>
-		const mbxToken = '<%-process.env.MAPBOX_TOKEN%>';
-		const elsewhere = <%-JSON.stringify(elsewhere)%>
-	</script>
-
-	<script src="/javascript/map-box.js"></script>

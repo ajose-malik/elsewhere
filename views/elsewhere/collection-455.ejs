@@ -1,0 +1,145 @@
+<% layout('layout/template')%>
+<div class="py-4">
+	<h1 class="text-mid-dark">My <strong>Collection</strong></h1>
+</div>
+
+<link rel="stylesheet" href="/stylesheet/rating.css" />
+
+<div class="col-md-12 row mb-3 my-2">
+	<div class="col-md-8">
+		<div
+			id="carouselControl"
+			class="carousel carousel-dark slide mb-4"
+			data-ride="carousel"
+			style="height: 40vh"
+		>
+			<div class="carousel-inner" style="height: 40vh">
+				<% userElsewheres[0].image.forEach((image, index) => { %>
+				<div
+					class="carousel-item <%= index === 0 ? 'active' : ''%>"
+					style="height: 40vh"
+					data-bs-interval="5000"
+				>
+					<img
+						src="<%= image.url%>"
+						style="height: 40vh"
+						class="d-block w-100"
+						alt="images"
+					/>
+				</div>
+				<% }) %>
+			</div>
+			<% if(userElsewheres[0].image.length > 1) {%>
+			<a
+				class="carousel-control-prev"
+				href="#carouselControl"
+				role="button"
+				data-bs-slide="prev"
+			>
+				<span class="carousel-control-prev-icon" aria-hidden="true"></span>
+				<span class="visually-hidden">Prev</span>
+			</a>
+			<a
+				class="carousel-control-next"
+				href="#carouselControl"
+				role="button"
+				data-bs-slide="next"
+			>
+				<span class="carousel-control-next-icon" aria-hidden="true"></span>
+				<span class="visually-hidden">Next</span>
+			</a>
+			<% } %>
+		</div>
+			
+		<!-- Current Elsewhere -->
+		<div class="accordion accordion-flush mb-4">
+			<div class="accordion-item bg-light" id="accordionId">
+				<h2 class="accordion-header" id="flush-headingOne">
+					<button
+						class="accordion-button collapsed bg-light"
+						type="button"
+						data-bs-toggle="collapse"
+						data-bs-target="#collapseId"
+						aria-expanded="false"
+						aria-controls="flush-collapseOne"
+					>
+						<h5 class='text-mid'><strong><%= userElsewheres[0].title%></strong></h5>
+					</button>
+				</h2>
+
+				<div
+					id="collapseId"
+					class="accordion-collapse collapse"
+					aria-labelledby="flush-headingOne"
+					data-bs-parent="#accordionId"
+				>
+
+					<div class="accordion-body">
+						<div><strong class="text-mid"><%= userElsewheres[0].description%><strong></div>
+
+						<div class="mb-5">
+							<a
+								class="card-link btn mb-5 me-3 border border-secondary rounded-3 border-2" style="background-color: #e9e9e960"
+								href="/elsewhere/<%=userElsewheres[0]._id%>/edit"
+							>Edit</a>
+							<form
+								class="d-inline"
+								action="/elsewhere/<%=userElsewheres[0].id%>?_method=DELETE"
+								method="POST"
+							>
+								<button class="btn btn-danger mb-5">Delete</button>
+							</form>
+						</div>
+					</div>
+				
+				</div>
+				
+			</div>
+			
+		</div>
+
+		</div>
+
+
+
+</div>
+
+
+
+<div class="col-md-4">
+	<!-- Dropdown -->
+	<div class='bg-light'>
+		<h5 class="mb-4 text-margin"><%= userElsewheres[0].description%></h5>
+	</div>
+		<!-- Submitted ratings -->
+		<div class="accordion accordion-flush mb-4">
+			<% userElsewheres[0].rating.forEach((rating, index) => { %>
+			<div class="accordion-item bg-light" id="accordion<%=index%>">
+				<h2 class="accordion-header" id="flush-headingOne">
+					<button
+						class="accordion-button collapsed bg-light"
+						type="button"
+						data-bs-toggle="collapse"
+						data-bs-target="#collapse<%=index%>"
+						aria-expanded="false"
+						aria-controls="flush-collapseOne">
+						<p
+							 class="starability-result me-3"
+							data-rating="<%=rating.star%>"
+						></p>
+						<h5 class='text-mid'>Review by <strong><%=rating.patron%></strong></h5>
+					</button>
+				</h2>
+			</div>
+			<div
+				id="collapse<%=index%>"
+				class="accordion-collapse collapse"
+				aria-labelledby="flush-headingOne"
+				data-bs-parent="#accordion<%=index%>">
+				<div class="accordion-body">
+					<strong class="text-mid"><%= rating.comment %></strong>
+				</div>
+			</div>
+		</div><% }) %>
+</div>
+
