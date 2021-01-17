@@ -62,7 +62,6 @@ elseRouter.post(
 			}));
 
 			await newElsewhere.save();
-			console.log(newElsewhere);
 			res.redirect(`/elsewhere/${newElsewhere.id}`);
 		}
 	})
@@ -77,9 +76,10 @@ elseRouter.get(
 		const currentUserInfo = await User.findById(currentUser);
 		const elsewheres = await Elsewhere.find({});
 
-		const userElsewheres = elsewheres.map(elsewhere => {
+		userElsewheres = [];
+		elsewheres.map(elsewhere => {
 			if (elsewhere.author.includes(currentUser)) {
-				return elsewhere;
+				userElsewheres.push(elsewhere);
 			}
 		});
 
@@ -107,17 +107,17 @@ elseRouter.get(
 		const authorId = elsewhere.author[0]._id;
 		const author = await User.findById(authorId);
 
-		let currentUser = req.session.currentUser;
+		let { currentUser } = req.session;
 		const currentUserInfo = await User.findById(currentUser);
 
 		if (currentUserInfo) {
 			const { username } = currentUserInfo;
-
 			return res.render('elsewhere/show', {
 				elsewhere,
 				currentUser,
 				username,
-				author
+				author,
+				authorId
 			});
 		} else {
 			return res.redirect('/user/sign-in');
@@ -175,7 +175,7 @@ elseRouter.delete(
 	catchAsync(async (req, res) => {
 		const { id } = req.params;
 		await Elsewhere.findByIdAndDelete(id);
-		res.redirect('/elsewhere');
+		res.redirect('/elsewhere/collection');
 	})
 );
 

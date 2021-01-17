@@ -10,6 +10,9 @@ html {
 	font-family: 'Montserrat Alternates', sans-serif;
 }
 
+p {
+	font-size: 1.2rem;
+}
 #map-cluster {
 	height: 70vh;
 }
