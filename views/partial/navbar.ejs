@@ -29,24 +29,9 @@
 					<a class="nav-link" href="/elsewhere/collection">Collection</a>
 				</li>
 
-				<!-- searchbox -->
-				<li>
-					<form class="d-flex ms-3">
-						<input
-							class="form-control me-2"
-							type="search"
-							placeholder="Search"
-							aria-label="Search"
-						/>
-						<button class="btn btn-outline-success" type="submit">
-							Search
-						</button>
-					</form>
-				</li>
-
 				<li>
 					<form action="/user/sign-out?_method=DELETE" method="POST">
-						<button class="btn btn-outline-secondary ms-3" type="submit">
+						<button class="btn btn-outline-danger ms-3" type="submit">
 							Sign Out
 						</button>
 					</form>
@@ -56,7 +41,7 @@
 
 				<li>
 					<form action="/user/sign-in">
-						<button class="btn btn-outline-secondary ms-3" type="submit">
+						<button class="btn btn-outline-success ms-3" type="submit">
 							Sign In
 						</button>
 					</form>

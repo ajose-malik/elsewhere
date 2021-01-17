@@ -17,7 +17,7 @@ elseRouter.get(
 	'/',
 	catchAsync(async (req, res) => {
 		const elsewheres = await Elsewhere.find({});
-		let currentUser = req.session.currentUser;
+		let { currentUser } = req.session;
 		res.render('home', { elsewheres, currentUser });
 	})
 );

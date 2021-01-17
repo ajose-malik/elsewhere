@@ -6,6 +6,16 @@ const map = new mapboxgl.Map({
 	zoom: 1
 });
 
+const geocoder = new MapboxGeocoder({
+	// Initialize the geocoder
+	accessToken: mapboxgl.accessToken, // Set the access token
+	mapboxgl: mapboxgl, // Set the mapbox-gl instance
+	marker: false, // Do not use the default marker style
+	placeholder: 'Search'
+});
+
+// Add the geocoder to the map
+map.addControl(geocoder);
 map.addControl(new mapboxgl.NavigationControl());
 
 map.on('load', function () {
