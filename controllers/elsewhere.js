@@ -73,10 +73,9 @@ elseRouter.get(
 	// isAuth,
 	catchAsync(async (req, res) => {
 		let { currentUser } = req.session;
-		const currentUserInfo = await User.findById(currentUser);
-		const elsewheres = await Elsewhere.find({});
+		const elsewheres = await Elsewhere.find({}).populate('rating');
 
-		userElsewheres = [];
+		const userElsewheres = [];
 		elsewheres.map(elsewhere => {
 			if (elsewhere.author.includes(currentUser)) {
 				userElsewheres.push(elsewhere);

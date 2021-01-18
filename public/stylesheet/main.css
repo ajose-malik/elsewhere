@@ -66,6 +66,13 @@ h5 {
 	border-radius: 0px 0px 10px 10px !important;
 }
 
+#menu {
+	position: absolute;
+	background: #fff;
+	padding: 10px;
+	font-family: 'Open Sans', sans-serif;
+}
+
 @media (max-width: 767px) {
 	.mobile-hide {
 		display: none !important;

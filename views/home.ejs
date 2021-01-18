@@ -1,12 +1,7 @@
 <% layout('layout/template')%>
 <h1 class="py-4">Go <strong>Explore</strong></h1>
-<div id="comparison-container">
-	<div id="map-cluster before" style="height: 70vh"
+<div id="map-cluster" style="height: 70vh"
 class="d-block w-100""></div>
-	<div id="map-cluster after" style="height: 70vh"
-class="d-block w-100""></div>
-	</div>
-
 
 <script>
 	const mbxToken = '<%-process.env.MAPBOX_TOKEN%>';

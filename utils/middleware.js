@@ -79,15 +79,16 @@ module.exports.renderHome = async (req, res) => {
 	const elsewheres = await Elsewhere.find({})
 		.populate('rating')
 		.populate('author');
-	const rand = value => {
-		return value[Math.floor(Math.random() * elsewheres.length)];
-	};
 
 	const elsewhereAtIdxZero = [];
 	for (let elsewhere of elsewheres) {
 		const image = elsewhere.image.map(el => el);
 		elsewhereAtIdxZero.push({ image: image[0].url, elsewhere });
 	}
+
+	const rand = value => {
+		return value[Math.floor(Math.random() * elsewheres.length)];
+	};
 
 	const rand1Ratings = [];
 	const rand2Ratings = [];

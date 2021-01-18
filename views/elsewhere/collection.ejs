@@ -31,19 +31,36 @@
 			aria-labelledby="flush-headingOne"
 			data-bs-parent="#accordionCollection"
 		>
-			<% userElsewheres.map((elsewhere, index) => { %>
+			<% userElsewheres.map(elsewhere => {	
+					<!-- Rating -->
+					let ratingsTotal = 0;
+					let numRatings = 0;  
+
+					elsewhere.rating.map(rating => { 
+						ratingsTotal += rating.star;
+			numRatings += 1;
+			})%>				
 		<div>
-				<div class="accordion-body btn btn-light d-flex flex-wrap justify-content-between mt-3">
+				<div class="accordion-body btn btn-light d-block mt-3">
 						<a
 							href="/elsewhere/<%=elsewhere._id%>"
 							class="text-decoration-none text-mid"
 						>
 							<p class='mt-2'>
-								<strong><%= elsewhere.title%></strong> — <%= elsewhere.location%>
+								<strong><%= elsewhere.title%></strong> — <%= elsewhere.location%>	— <i class="far fa-star"></i>
+								<%if
+								(isNaN(ratingsTotal/numRatings))
+								{%>
+								<strong>0</strong>(0) <%} else {%>
+								<strong>
+									<%=ratingsTotal/numRatings%></strong
+								>
+								(<%=numRatings%>) <%}%>
 							</p>
 						</a>
+				
 						<!-- Delete & Edit -->
-						<div>
+						<div class='d-block'>
 								<a
 								class="card-link btn me-3 border border-secondary rounded-3 border-2"
 								style="background-color: #e9e9e960"
