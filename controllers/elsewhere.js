@@ -93,6 +93,47 @@ elseRouter.get(
 	})
 );
 
+// Inspiration route
+elseRouter.get(
+	'/inspiration',
+	// isAuth,
+	catchAsync(async (req, res) => {
+		let { currentUser } = req.session;
+		const elsewheres = await Elsewhere.find({}).populate('rating');
+
+		const userElsewheres = [];
+		elsewheres.map(elsewhere => {
+			if (elsewhere.author.includes(currentUser)) {
+				userElsewheres.push(elsewhere);
+			}
+		});
+
+		if (currentUser) {
+			return res.render('elsewhere/inspiration', {
+				userElsewheres,
+				currentUser
+			});
+		} else {
+			return res.redirect('/user/sign-in');
+		}
+	})
+);
+
+// Inspiration route
+elseRouter.post(
+	'/:id/inspiration',
+	catchAsync(async (req, res) => {
+		const { id } = req.params;
+		const elsewhere = await Elsewhere.findById(id).populated('rating');
+		const { currentUser } = req.session;
+		const inspired = await User.findByIdAndUpdate(currentUser, {
+			inspiration: elsewhere
+		});
+		console.log(inspired);
+		res.render('/elsewhere/inspiration', { elsewhere, currentUser });
+	})
+);
+
 // Show route
 elseRouter.get(
 	'/:id',
@@ -132,7 +173,7 @@ elseRouter.get(
 	catchAsync(async (req, res) => {
 		let currentUser = req.session.currentUser;
 		const { id } = req.params;
-		const elsewhere = await Elsewhere.findById(id);
+		const elsewhere = await await Elsewhere.findById(id);
 		res.render('elsewhere/edit', { elsewhere, currentUser });
 	})
 );

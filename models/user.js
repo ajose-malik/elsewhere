@@ -14,7 +14,8 @@ const userSchema = new Schema({
 	password: {
 		type: String,
 		required: true
-	}
+	},
+	inspiration: []
 });
 
 module.exports = mongoose.model('User', userSchema);
