@@ -6,7 +6,6 @@ const ejsMate = require('ejs-mate');
 const mongoose = require('mongoose');
 const session = require('express-session');
 const flash = require('connect-flash');
-const Elsewhere = require('./models/elsewhere');
 const elseRouter = require('./controllers/elsewhere');
 const seedRouter = require('./controllers/seeder');
 const userRouter = require('./controllers/user');

@@ -65,11 +65,22 @@ seedRouter.get(`/${SEEDER}`, async (req, res) => {
 	for (let i = 0; i < 100; i++) {
 		const randGen = Math.floor(Math.random() * cities.length);
 		const randUrl = Math.floor(Math.random() * imageUrl.length);
+		const randUrl1 = Math.floor(Math.random() * imageUrl.length);
+		const randUrl2 = Math.floor(Math.random() * imageUrl.length);
+		const randUrl3 = Math.floor(Math.random() * imageUrl.length);
+		const randUrl4 = Math.floor(Math.random() * imageUrl.length);
+		const randUrl5 = Math.floor(Math.random() * imageUrl.length);
+
 		const url = imageUrl[randUrl];
+		const url1 = imageUrl[randUrl1];
+		const url2 = imageUrl[randUrl2];
+		const url3 = imageUrl[randUrl3];
+		const url4 = imageUrl[randUrl4];
+		const url5 = imageUrl[randUrl5];
 
 		const elsewhere = new Elsewhere({
 			author: '6006500ce43fb13bcf4310ce',
-			location: `${cities[randGen].fields.name}`,
+			location: `${cities[randGen].city}`,
 			title: faker.lorem.word(),
 			description: faker.lorem.paragraph(),
 			image: [
@@ -78,32 +89,29 @@ seedRouter.get(`/${SEEDER}`, async (req, res) => {
 					filename: `Elsewhere/${faker.lorem.word()}`
 				},
 				{
-					url,
+					url: url1,
 					filename: `Elsewhere/${faker.lorem.word()}`
 				},
 				{
-					url,
+					url: url2,
 					filename: `Elsewhere/${faker.lorem.word()}`
 				},
 				{
-					url,
+					url: url3,
 					filename: `Elsewhere/${faker.lorem.word()}`
 				},
 				{
-					url,
+					url: url4,
 					filename: `Elsewhere/${faker.lorem.word()}`
 				},
 				{
-					url,
+					url: url5,
 					filename: `Elsewhere/${faker.lorem.word()}`
 				}
 			],
 			geometry: {
 				type: 'Point',
-				coordinates: [
-					cities[randGen].fields.longitude,
-					cities[randGen].fields.latitude
-				]
+				coordinates: [cities[randGen].longitude, cities[randGen].latitude]
 			}
 		});
 

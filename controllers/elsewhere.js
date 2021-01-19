@@ -23,19 +23,15 @@ elseRouter.get(
 );
 
 // New route
-elseRouter.get(
-	'/new',
-	// isAuth,
-	(req, res) => {
-		let currentUser = req.session.currentUser;
-		res.render('elsewhere/new', { currentUser });
-	}
-);
+elseRouter.get('/new', isAuth, (req, res) => {
+	let currentUser = req.session.currentUser;
+	res.render('elsewhere/new', { currentUser });
+});
 
 elseRouter.post(
 	'/',
 	upload.array('image'),
-	// isAuth,
+	isAuth,
 	catchAsync(async (req, res) => {
 		const { elsewhere } = req.body;
 		const mapData = await mapper
@@ -70,7 +66,7 @@ elseRouter.post(
 // Collection route
 elseRouter.get(
 	'/collection',
-	// isAuth,
+	isAuth,
 	catchAsync(async (req, res) => {
 		let { currentUser } = req.session;
 		const elsewheres = await Elsewhere.find({}).populate('rating');
@@ -93,50 +89,10 @@ elseRouter.get(
 	})
 );
 
-// Inspiration route
-elseRouter.get(
-	'/inspiration',
-	// isAuth,
-	catchAsync(async (req, res) => {
-		let { currentUser } = req.session;
-		const user = await User.findById(currentUser);
-
-		if (currentUser) {
-			if (user.inspiration.length) {
-				const inspiration = user.inspiration.map(inspired => inspired);
-
-				return res.render('elsewhere/inspiration', {
-					inspiration,
-					currentUser
-				});
-			} else {
-				return res.redirect('/elsewhere/inspiration');
-			}
-		} else {
-			return res.redirect('/user/sign-in');
-		}
-	})
-);
-
-// Inspiration route
-elseRouter.post(
-	'/:id/inspiration',
-	catchAsync(async (req, res) => {
-		const { id } = req.params;
-		const elsewhere = await Elsewhere.findById(id).populate('rating');
-		const { currentUser } = req.session;
-		const user = await User.findById(currentUser);
-		user.inspiration.push(elsewhere);
-		await user.save();
-		const { inspiration } = user;
-		res.render('elsewhere/inspiration', { inspiration, currentUser });
-	})
-);
-
 // Show route
 elseRouter.get(
 	'/:id',
-	// isAuth,
+	isAuth,
 	catchAsync(async (req, res) => {
 		const { id } = req.params;
 		const elsewhere = await Elsewhere.findById(id)
@@ -167,8 +123,8 @@ elseRouter.get(
 // Edit route
 elseRouter.get(
 	'/:id/edit',
-	// isAuth,
-	// isAuthor,
+	isAuth,
+	isAuthor,
 	catchAsync(async (req, res) => {
 		let currentUser = req.session.currentUser;
 		const { id } = req.params;
@@ -180,8 +136,8 @@ elseRouter.get(
 elseRouter.put(
 	'/:id',
 	upload.array('image'),
-	// isAuth,
-	// isAuthor,
+	isAuth,
+	isAuthor,
 	catchAsync(async (req, res) => {
 		const { id } = req.params;
 		const elsewhere = await Elsewhere.findByIdAndUpdate(id, {
@@ -209,8 +165,8 @@ elseRouter.put(
 // Destroy route - Collection
 elseRouter.delete(
 	'/:id',
-	// isAuth,
-	// isAuthor,
+	isAuth,
+	isAuthor,
 	catchAsync(async (req, res) => {
 		const { id } = req.params;
 		await Elsewhere.findByIdAndDelete(id);

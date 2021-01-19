@@ -1,8 +1,5 @@
 const bcrypt = require('bcrypt');
 const express = require('express');
-const multer = require('multer');
-const { storage } = require('../utils/cloud-storage');
-const upload = multer({ storage });
 const { validateUser } = require('../utils/middleware');
 const catchAsync = require('../utils/catch-async');
 const userRouter = express.Router();
@@ -16,7 +13,7 @@ userRouter.get('/sign-up', (req, res) => {
 
 userRouter.post(
 	'/sign-up',
-	// validateUser,
+	validateUser,
 	catchAsync(async (req, res) => {
 		const { user } = req.body;
 
