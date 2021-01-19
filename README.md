@@ -9,11 +9,11 @@ Elsewhere is a platform that empowers people from all walks of life to share the
 ### Technologies:
 This is a full CRUD application built with HTML, CSS, SaSS, Bootstrap, JavaScript, Node.js, Express.js, MongoDB (noSQL), Mongoose, Embedded JavaScript (EJS). Below are some of the node packages used in this project:
 
-—Bcrypt for authentication and authorization
-—Mapbox for map navigation and interactivity
-—Cloudinary for image storage
-—Joi for schema authentication
-—FakerJS for project seeding
-—EJS Mate for templating
-—connect Flash to handle success and error messages
-—Multer for file uploads
+* Bcrypt for authentication and authorization
+* Mapbox for map navigation and interactivity
+* Cloudinary for image storage
+* Joi for schema authentication
+* FakerJS for project seeding
+* EJS Mate for templating
+* connect Flash to handle success and error messages
+* Multer for file uploads
