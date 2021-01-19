@@ -12,7 +12,7 @@ This is a full CRUD application built with HTML, CSS, SaSS, Bootstrap, JavaScrip
 * Bcrypt for authentication and authorization
 * Mapbox for map navigation and interactivity
 * Cloudinary for image storage
-* Joi for schema authentication
+* Joi for schema validation
 * FakerJS for project seeding
 * EJS Mate for templating
 * connect Flash to handle success and error messages
