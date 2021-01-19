@@ -99,20 +99,19 @@ elseRouter.get(
 	// isAuth,
 	catchAsync(async (req, res) => {
 		let { currentUser } = req.session;
-		const elsewheres = await Elsewhere.find({}).populate('rating');
-
-		const userElsewheres = [];
-		elsewheres.map(elsewhere => {
-			if (elsewhere.author.includes(currentUser)) {
-				userElsewheres.push(elsewhere);
-			}
-		});
+		const user = await User.findById(currentUser);
 
 		if (currentUser) {
-			return res.render('elsewhere/inspiration', {
-				userElsewheres,
-				currentUser
-			});
+			if (user.inspiration.length) {
+				const inspiration = user.inspiration.map(inspired => inspired);
+
+				return res.render('elsewhere/inspiration', {
+					inspiration,
+					currentUser
+				});
+			} else {
+				return res.redirect('/elsewhere/inspiration');
+			}
 		} else {
 			return res.redirect('/user/sign-in');
 		}
@@ -124,13 +123,13 @@ elseRouter.post(
 	'/:id/inspiration',
 	catchAsync(async (req, res) => {
 		const { id } = req.params;
-		const elsewhere = await Elsewhere.findById(id).populated('rating');
+		const elsewhere = await Elsewhere.findById(id).populate('rating');
 		const { currentUser } = req.session;
-		const inspired = await User.findByIdAndUpdate(currentUser, {
-			inspiration: elsewhere
-		});
-		console.log(inspired);
-		res.render('/elsewhere/inspiration', { elsewhere, currentUser });
+		const user = await User.findById(currentUser);
+		user.inspiration.push(elsewhere);
+		await user.save();
+		const { inspiration } = user;
+		res.render('elsewhere/inspiration', { inspiration, currentUser });
 	})
 );
 
@@ -173,7 +172,7 @@ elseRouter.get(
 	catchAsync(async (req, res) => {
 		let currentUser = req.session.currentUser;
 		const { id } = req.params;
-		const elsewhere = await await Elsewhere.findById(id);
+		const elsewhere = await Elsewhere.findById(id);
 		res.render('elsewhere/edit', { elsewhere, currentUser });
 	})
 );
@@ -207,7 +206,7 @@ elseRouter.put(
 	})
 );
 
-// Destroy route
+// Destroy route - Collection
 elseRouter.delete(
 	'/:id',
 	// isAuth,
