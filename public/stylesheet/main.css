@@ -75,8 +75,12 @@ h5 {
 	line-height: 1.6;
 }
 
-.rand-mid {
-	margin: 10px;
+/* .rand-mid {
+	padding: 0px 20px;
+} */
+
+.col-md-4 {
+	width: 32%;
 }
 
 .margin-bottom {
@@ -85,6 +89,14 @@ h5 {
 
 .card-border {
 	border-radius: 0px 0px 10px 10px;
+}
+
+.card-border2 {
+	border-radius: 10px 10px 10px 10px;
+}
+
+img.card-img {
+	border-radius: 10px 10px 10px 10px;
 }
 
 @media (max-width: 1400px) {
@@ -157,7 +169,7 @@ h5 {
 	}
 
 	.rand-mid {
-		margin: 0px;
+		padding: 0px;
 	}
 
 	img.card-img-top {
@@ -174,5 +186,9 @@ h5 {
 
 	#footer {
 		text-align: center;
+	}
+
+	.col-md-4 {
+		width: 100%;
 	}
 }

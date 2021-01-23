@@ -25,7 +25,7 @@
 						alt="images"
 					/>
 				</div>
-				<div class="m-5 text-mid overflow-auto .d-sm-none .d-md-block">
+				<div class="m-5 text-mid overflow-auto">
 					<h3>
 						<strong><%= info.elsewhere.title%></strong>
 					</h3>
@@ -64,8 +64,9 @@
 </div>
 
 <!-- Random Adventures -->
-<div class="d-md-flex margin-bottom">
-	<div class="mt-4">
+<!-- rand1 -->
+<div class="d-md-flex justify-content-md-between">
+	<div class="mt-4 col-md-4">
 		<a href="/elsewhere/<%= randElsewhere1._id%>" class="text-decoration-none">
 			<div class="card card-border shadow-lg">
 				<div class="card-body card-border p-0 bg-dark">
@@ -98,8 +99,9 @@
 			</div>
 		</a>
 	</div>
+	<!-- rand2 -->
 
-	<div class="mt-4 rand-mid">
+	<div class="mt-4 rand-mid col-md-4">
 		<a href="/elsewhere/<%= randElsewhere2._id%>" class="text-decoration-none">
 			<div class="card card-border shadow-lg">
 				<div class="card-body card-border p-0 bg-dark">
@@ -132,7 +134,8 @@
 			</div>
 		</a>
 	</div>
-	<div class="mt-4">
+	<!-- rand3 -->
+	<div class="mt-4 col-md-4">
 		<a href="/elsewhere/<%= randElsewhere3._id%>" class="text-decoration-none">
 			<div class="card card-border shadow-lg">
 				<div class="card-body card-border p-0 bg-dark">
@@ -160,6 +163,114 @@
 					</div>
 					<p class="text-mid px-4 pb-3">
 						<strong><%= randElsewhere3.location%></strong>
+					</p>
+				</div>
+			</div>
+		</a>
+	</div>
+</div>
+
+<!-- rand4 -->
+
+<div class="d-md-flex justify-content-md-between margin-bottom">
+	<div class="mt-4 col-md-4">
+		<a href="/elsewhere/<%= randElsewhere4._id%>" class="text-decoration-none">
+			<div class="card card-border2 shadow-lg">
+				<div class="card-body card-border2 p-0 bg-dark">
+					<img
+						src="<%= randElsewhere4.image[0].url%>"
+						class="card-img card-img-height"
+						alt="image"
+					/>
+					<div class="d-flex justify-content-between px-4">
+						<h5 class="text-mid mt-3 mb-0">
+							<strong><%= randElsewhere4.title%></strong>
+						</h5>
+
+						<h5 class="text-mid mt-3 mb-0">
+							<i class="far fa-star"></i>
+							<%if
+							(isNaN(rand4Ratings[0].ratingsTotal/rand4Ratings[0].numRatings))
+							{%>
+							<strong>0</strong>(0) <%} else {%>
+							<strong>
+								<%=rand4Ratings[0].ratingsTotal/rand4Ratings[0].numRatings%></strong
+							>
+							(<%=rand4Ratings[0].numRatings%>) <%}%>
+						</h5>
+					</div>
+					<p class="text-mid px-4 pb-3">
+						<strong><%= randElsewhere4.location%></strong>
+					</p>
+				</div>
+			</div>
+		</a>
+	</div>
+	<!-- rand5 -->
+
+	<div class="mt-4 rand-mid col-md-4">
+		<a href="/elsewhere/<%= randElsewhere5._id%>" class="text-decoration-none">
+			<div class="card card-border2 shadow-lg">
+				<div class="card-body card-border2 p-0 bg-dark">
+					<img
+						src="<%= randElsewhere5.image[0].url%>"
+						class="card-img card-img-height"
+						alt="image"
+					/>
+					<div class="d-flex justify-content-between px-4">
+						<h5 class="text-mid mt-3 mb-0">
+							<strong><%= randElsewhere5.title%></strong>
+						</h5>
+
+						<h5 class="text-mid mt-3 mb-0">
+							<i class="far fa-star"></i>
+							<%if
+							(isNaN(rand5Ratings[0].ratingsTotal/rand5Ratings[0].numRatings))
+							{%>
+							<strong>0</strong>(0) <%} else {%>
+							<strong>
+								<%=rand5Ratings[0].ratingsTotal/rand5Ratings[0].numRatings%></strong
+							>
+							(<%=rand5Ratings[0].numRatings%>) <%}%>
+						</h5>
+					</div>
+					<p class="text-mid px-4 pb-3">
+						<strong><%= randElsewhere5.location%></strong>
+					</p>
+				</div>
+			</div>
+		</a>
+	</div>
+	<!-- rand6 -->
+
+	<div class="mt-4 col-md-4">
+		<a href="/elsewhere/<%= randElsewhere6._id%>" class="text-decoration-none">
+			<div class="card card-border2 shadow-lg">
+				<div class="card-body card-border2 p-0 bg-dark">
+					<img
+						src="<%= randElsewhere6.image[0].url%>"
+						class="card-img card-img-height"
+						alt="image"
+					/>
+					<div class="d-flex justify-content-between px-4">
+						<h5 class="text-mid mt-3 mb-0">
+							<strong><%= randElsewhere6.title%></strong>
+						</h5>
+
+						<h5 class="text-mid mt-3 mb-0">
+							<i class="far fa-star"></i>
+							<%if
+							(isNaN(rand6Ratings[0].ratingsTotal/rand6Ratings[0].numRatings))
+							{%>
+							<strong>0</strong>(0) <%} else {%>
+							<strong>
+								<%=rand6Ratings[0].ratingsTotal/rand6Ratings[0].numRatings%></strong
+							>
+							(<%=rand6Ratings[0].numRatings%>) <%}%>
+						</h5>
+					</div>
+					<p class="text-mid px-4 pb-3">
+						<strong><%= randElsewhere6.location%></strong>
 					</p>
 				</div>
 			</div>

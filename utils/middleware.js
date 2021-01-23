@@ -93,9 +93,15 @@ module.exports.renderHome = async (req, res) => {
 	const rand1Ratings = [];
 	const rand2Ratings = [];
 	const rand3Ratings = [];
+	const rand4Ratings = [];
+	const rand5Ratings = [];
+	const rand6Ratings = [];
 	const randElsewhere1 = rand(elsewheres);
 	const randElsewhere2 = rand(elsewheres);
 	const randElsewhere3 = rand(elsewheres);
+	const randElsewhere4 = rand(elsewheres);
+	const randElsewhere5 = rand(elsewheres);
+	const randElsewhere6 = rand(elsewheres);
 
 	const randElsewhereRatings = (elseObject, ratingsArray) => {
 		let ratingsTotal = 0;
@@ -110,6 +116,9 @@ module.exports.renderHome = async (req, res) => {
 	randElsewhereRatings(randElsewhere1, rand1Ratings);
 	randElsewhereRatings(randElsewhere2, rand2Ratings);
 	randElsewhereRatings(randElsewhere3, rand3Ratings);
+	randElsewhereRatings(randElsewhere4, rand4Ratings);
+	randElsewhereRatings(randElsewhere5, rand5Ratings);
+	randElsewhereRatings(randElsewhere6, rand6Ratings);
 
 	res.render('elsewhere/index', {
 		currentUser,
@@ -117,8 +126,14 @@ module.exports.renderHome = async (req, res) => {
 		randElsewhere1,
 		randElsewhere2,
 		randElsewhere3,
+		randElsewhere4,
+		randElsewhere5,
+		randElsewhere6,
 		rand1Ratings,
 		rand2Ratings,
-		rand3Ratings
+		rand3Ratings,
+		rand4Ratings,
+		rand5Ratings,
+		rand6Ratings
 	});
 };
