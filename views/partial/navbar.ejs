@@ -1,50 +1,56 @@
-<nav class="navbar navbar-expand-sm navbar-dark bg-dark sticky-top padding-top">
-	<div class="container-fluid">
-		<a class="navbar-brand" href="/">Elsewhere</a>
-		<button
-			class="navbar-toggler"
-			type="button"
-			data-bs-toggle="collapse"
-			data-bs-target="#navbarNavDropdown"
-			aria-controls="navbarNavDropdown"
-			aria-expanded="false"
-			aria-label="Toggle navigation"
-		>
-			<span class="navbar-toggler-icon"></span>
-		</button>
-		<div class="collapse navbar-collapse" id="navbarNavDropdown">
-			<ul class="navbar-nav">
-				<li>
-					<a class="nav-link" href="/">Adventure</a>
-				</li>
-				<li>
-					<a class="nav-link" href="/elsewhere">Explore</a>
-				</li>
+<div class="padding-top bg-dark">
+	<nav class="navbar navbar-expand-sm navbar-dark sticky-top">
+		<div class="container-fluid">
+			<a class="navbar-brand" href="/">Elsewhere</a>
+			<button
+				class="navbar-toggler"
+				type="button"
+				data-bs-toggle="collapse"
+				data-bs-target="#navbarNavDropdown"
+				aria-controls="navbarNavDropdown"
+				aria-expanded="false"
+				aria-label="Toggle navigation"
+			>
+				<span class="navbar-toggler-icon"></span>
+			</button>
+			<div class="collapse navbar-collapse" id="navbarNavDropdown">
+				<ul class="navbar-nav">
+					<li>
+						<a class="nav-link" href="/">Adventure</a>
+					</li>
+					<li>
+						<a class="nav-link" href="/elsewhere">Explore</a>
+					</li>
 
-				<%if(currentUser) {%>
-				<li>
-					<a class="nav-link" href="/elsewhere/collection">Collection</a>
-				</li>
+					<%if(currentUser) {%>
+					<li>
+						<a class="nav-link" href="/elsewhere/collection">Collection</a>
+					</li>
 
-				<li>
-					<a class="nav-link" href="/elsewhere/new">Curate</a>
-				</li>
-			</ul>
+					<li>
+						<a class="nav-link" href="/elsewhere/new">Curate</a>
+					</li>
+				</ul>
 
-			<form action="/user/sign-out?_method=DELETE" method="POST" class="d-flex">
-				<button class="btn btn-outline-danger ms-3" type="submit">
-					Sign Out
-				</button>
-			</form>
+				<form
+					action="/user/sign-out?_method=DELETE"
+					method="POST"
+					class="d-flex"
+				>
+					<button class="btn btn-outline-danger ms-3" type="submit">
+						Sign Out
+					</button>
+				</form>
 
-			<%} else {%>
+				<%} else {%>
 
-			<form action="/user/sign-in" class="d-flex">
-				<button class="btn btn-outline-success ms-3" type="submit">
-					Sign In
-				</button>
-			</form>
-			<%}%>
+				<form action="/user/sign-in" class="d-flex">
+					<button class="btn btn-outline-success ms-3" type="submit">
+						Sign In
+					</button>
+				</form>
+				<%}%>
+			</div>
 		</div>
-	</div>
-</nav>
+	</nav>
+</div>
