@@ -12,21 +12,18 @@
 	<div class="col-md-8">
 		<div
 			id="carouselControl"
-			class="carousel carousel-dark slide mb-4"
+			class="carousel carousel-light slide mb-4"
 			data-ride="carousel"
-			style="height: 40vh"
 		>
-			<div class="carousel-inner" style="height: 40vh">
+			<div class="carousel-inner carousel-index-height">
 				<% elsewhere.image.forEach((image, index) => { %>
 				<div
 					class="carousel-item <%= index === 0 ? 'active' : ''%>"
-					style="height: 40vh"
-					data-bs-interval="5000"
+					data-bs-interval="10000"
 				>
 					<img
 						src="<%= image.url%>"
-						style="height: 40vh"
-						class="d-block w-100"
+						class="carousel-index-height img-width"
 						alt="images"
 					/>
 				</div>
@@ -171,11 +168,11 @@
 
 	<!-- Map box -->
 	<div class="col-md-4">
-		<div id="map" style="height: 40vh" class="mb-4"></div>
+		<div id="map"  class="mb-4 carousel-index-height"></div>
 
 		<!-- Description -->
 		<div class='bg-light'>
-			<h5 class="mb-4 text-margin py-4"><%= elsewhere.description%></h5>
+			<h5 class="margin-bottom text-margin py-4"><%= elsewhere.description%></h5>
 		</div>
 	</div>
 </div>

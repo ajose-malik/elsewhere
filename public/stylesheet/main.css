@@ -75,9 +75,9 @@ h5 {
 	line-height: 1.6;
 }
 
-/* .rand-mid {
-	padding: 0px 20px;
-} */
+.text-margin {
+	margin: 0px 20px;
+}
 
 .col-md-4 {
 	width: 32%;
@@ -118,6 +118,10 @@ img.card-img {
 @media (max-width: 1200px) {
 	.carousel-index-height {
 		height: 400px;
+	}
+
+	.img-width {
+		width: 100%;
 	}
 
 	.card-img-height {
@@ -172,7 +176,7 @@ img.card-img {
 		padding: 0px;
 	}
 
-	img.card-img-top {
+	img.card-img-top-radius {
 		border-radius: 10px 10px 0px 0px;
 	}
 
