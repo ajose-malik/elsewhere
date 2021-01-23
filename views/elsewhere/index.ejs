@@ -5,10 +5,10 @@
 
 <div
 	id="carouselControl"
-	class="carousel carousel-dark slide col-md-12 row mb-3 default"
+	class="carousel carousel-light slide mb-3"
 	data-bs-ride="carousel"
 >
-	<div class="carousel-inner default">
+	<div class="carousel-inner bg-dark carousel-index-height carousel-radius">
 		<% elsewhereAtIdxZero.forEach((info, index) => { %>
 		<div
 			class="carousel-item <%= index === 0 ? 'active' : ''%>"
@@ -18,25 +18,21 @@
 				href="/elsewhere/<%= info.elsewhere._id%>"
 				class="d-flex text-decoration-none"
 			>
-				<div class="col-md-8 row default">
+				<div>
 					<img
 						src="<%= info.image%>"
-						style="height: 40vh"
-						class="d-block w-100 mobile-height default"
+						class="carousel-index-height"
 						alt="images"
 					/>
 				</div>
-				<div
-					class="col-md-4 row d-block w-95 overflow-auto mobile-hide default text-margin bg-dark ps-3 pe-4"
-					style="height: 40vh"
-				>
-					<h3 class="text-mid mobile-hide mt-4">
+				<div class="m-5 text-mid overflow-auto .d-sm-none .d-md-block">
+					<h3>
 						<strong><%= info.elsewhere.title%></strong>
 					</h3>
-					<h5 class="text-mid mobile-hide">
+					<h5>
 						<strong><%= info.elsewhere.location%></strong>
 					</h5>
-					<h5 class="text-mid mobile-hide"><%= info.elsewhere.description%></h5>
+					<h5><%= info.elsewhere.description%></h5>
 				</div>
 			</a>
 		</div>
@@ -45,10 +41,11 @@
 
 	<% if(elsewhereAtIdxZero.length > 1) {%>
 	<a
-		class="carousel-control-prev default"
+		class="carousel-control-prev"
 		href="#carouselControl"
 		role="button"
 		data-bs-slide="prev"
+		id="prev-arrow"
 	>
 		<span class="carousel-control-prev-icon" aria-hidden="true"></span>
 		<span class="visually-hidden">Prev</span>
@@ -60,22 +57,21 @@
 		data-bs-slide="next"
 		id="next-arrow"
 	>
-		<span class="carousel-control-next-icon default" aria-hidden="true"></span>
+		<span class="carousel-control-next-icon" aria-hidden="true"></span>
 		<span class="visually-hidden">Next</span>
 	</a>
 	<% } %>
 </div>
 
 <!-- Random Adventures -->
-<div class="row">
-	<div class="col-md-4 mt-4 pe-1">
+<div class="d-md-flex margin-bottom">
+	<div class="mt-4">
 		<a href="/elsewhere/<%= randElsewhere1._id%>" class="text-decoration-none">
 			<div class="card card-border shadow-lg">
 				<div class="card-body card-border p-0 bg-dark">
 					<img
 						src="<%= randElsewhere1.image[0].url%>"
-						style="height: 25vh"
-						class="w-100 card-img-top default mobile-height"
+						class="card-img-top card-img-height"
 						alt="image"
 					/>
 					<div class="d-flex justify-content-between px-4">
@@ -102,14 +98,14 @@
 			</div>
 		</a>
 	</div>
-	<div class="col-md-4 mt-4 pe-1">
+
+	<div class="mt-4 rand-mid">
 		<a href="/elsewhere/<%= randElsewhere2._id%>" class="text-decoration-none">
 			<div class="card card-border shadow-lg">
 				<div class="card-body card-border p-0 bg-dark">
 					<img
 						src="<%= randElsewhere2.image[0].url%>"
-						style="height: 25vh"
-						class="w-100 card-img-top default mobile-height"
+						class="card-img-top card-img-height"
 						alt="image"
 					/>
 					<div class="d-flex justify-content-between px-4">
@@ -136,14 +132,13 @@
 			</div>
 		</a>
 	</div>
-	<div class="col-md-4 mt-4 mb-5">
+	<div class="mt-4">
 		<a href="/elsewhere/<%= randElsewhere3._id%>" class="text-decoration-none">
-			<div class="card card-border shadow-lg mb-5">
+			<div class="card card-border shadow-lg">
 				<div class="card-body card-border p-0 bg-dark">
 					<img
 						src="<%= randElsewhere3.image[0].url%>"
-						style="height: 25vh"
-						class="w-100 card-img-top default mobile-height"
+						class="card-img-top card-img-height"
 						alt="image"
 					/>
 					<div class="d-flex justify-content-between px-4">
@@ -163,7 +158,7 @@
 							(<%=rand3Ratings[0].numRatings%>) <%}%>
 						</h5>
 					</div>
-					<p class="text-mid pb-3 px-4">
+					<p class="text-mid px-4 pb-3">
 						<strong><%= randElsewhere3.location%></strong>
 					</p>
 				</div>

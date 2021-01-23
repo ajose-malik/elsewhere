@@ -13,8 +13,18 @@ html {
 p {
 	font-size: 1.2rem;
 }
+
 #map-cluster {
 	height: 70vh;
+}
+
+.carousel-index-height {
+	height: 600px;
+}
+
+.card-img-height {
+	object-fit: cover;
+	height: 300px;
 }
 
 .navbar-brand {
@@ -45,7 +55,15 @@ p {
 }
 
 #next-arrow {
-	margin-right: 35%;
+	margin-top: 500px;
+	margin-right: 85%;
+	width: 30px;
+}
+
+#prev-arrow {
+	margin-top: 500px;
+	margin-left: 5%;
+	width: 30px;
 }
 
 .default {
@@ -53,38 +71,105 @@ p {
 	padding: 0;
 }
 
-.text-margin {
-	margin-left: 10px !important;
-	padding: 5px;
-}
-
 h5 {
 	line-height: 1.6;
 }
 
-.card-border {
-	border-radius: 0px 0px 10px 10px !important;
+.rand-mid {
+	margin: 10px;
 }
 
-@media (max-width: 767px) {
-	.mobile-hide {
-		display: none !important;
+.margin-bottom {
+	margin-bottom: 50px;
+}
+
+.card-border {
+	border-radius: 0px 0px 10px 10px;
+}
+
+@media (max-width: 1400px) {
+	.carousel-index-height {
+		height: 500px;
 	}
 
+	.card-img-height {
+		object-fit: cover;
+		height: 250px;
+	}
+
+	#prev-arrow,
 	#next-arrow {
-		margin-right: 0;
+		margin-top: 400px;
+	}
+}
+
+@media (max-width: 1200px) {
+	.carousel-index-height {
+		height: 400px;
 	}
 
-	.mobile-height {
-		height: 40vh !important;
+	.card-img-height {
+		object-fit: cover;
+		height: 200px;
+	}
+
+	#prev-arrow,
+	#next-arrow {
+		margin-top: 300px;
+	}
+}
+
+@media (max-width: 992px) {
+	.carousel-index-height {
+		height: 300px;
+	}
+
+	.card-img-height {
+		object-fit: cover;
+		height: 150px;
+	}
+
+	#prev-arrow,
+	#next-arrow {
+		margin-top: 200px;
+	}
+	#next-arrow {
+		margin-right: 80%;
+	}
+}
+
+@media (max-width: 766px) {
+	.carousel-index-height {
+		height: 400px;
+	}
+
+	.card-img-height {
+		object-fit: cover;
+		height: 300px;
+	}
+
+	#prev-arrow,
+	#next-arrow {
+		margin-top: 0px;
+	}
+	#next-arrow {
+		margin-right: 5%;
+	}
+
+	.rand-mid {
+		margin: 0px;
 	}
 
 	img.card-img-top {
-		border-radius: 10px 10px 0px 0px !important;
+		border-radius: 10px 10px 0px 0px;
 	}
 
 	.card-border {
-		border-radius: 10px 10px 10px 10px !important;
+		border-radius: 10px 10px 10px 10px;
+	}
+
+	.carousel-radius {
+		border-radius: 10px 10px 10px 10px;
 	}
 
 	#footer {
